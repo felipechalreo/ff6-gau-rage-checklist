@@ -1,16 +1,29 @@
-# FF6 Pixel Remaster — Gau Rage Checklist
+<p align="center">
+  <img src="zaghrem.webp" alt="Zaghrem" width="160">
+</p>
 
-An interactive browser-based checklist for tracking Gau's Rages in **Final Fantasy VI Pixel Remaster**.
+<h1 align="center">FF6 Pixel Remaster — Gau Rage Checklist</h1>
 
-## Live Tool
+<p align="center">
+  An interactive browser-based checklist for tracking Gau's Rages in
+  <strong>Final Fantasy VI Pixel Remaster</strong>.
+</p>
 
-https://felipechalreo.github.io/ff6-gau-rage-checklist/
+<p align="center">
+  <a href="https://felipechalreo.github.io/ff6-gau-rage-checklist/">
+    <strong>▶ Open the Live Checklist</strong>
+  </a>
+</p>
+
+## Preview
+
+![Gau Rage Checklist preview](screenshot.png)
 
 ## Features
 
 - All 252 obtainable Rages
 - Same ordering used by Gau's in-game Rage menu
-- Search by enemy or Rage ability
+- Search by enemy name or Rage ability
 - Filters for owned and missing Rages
 - Bestiary progress limit to hide later encounters
 - Separate controls for bosses and unnumbered enemies
@@ -39,19 +52,21 @@ Actual Veldt availability depends on which enemy formations have been encountere
 
 Download `index.html` and open it in any modern browser.
 
+The checklist does not require an internet connection after the file has been downloaded.
+
 ## Feedback and Corrections
 
-Found an incorrect enemy name, ability, menu position, or availability rule?
+Found an incorrect enemy name, Rage ability, menu position, or availability rule?
 
-Please open an issue:
-
-https://github.com/felipechalreo/ff6-gau-rage-checklist/issues
+[Report an issue](https://github.com/felipechalreo/ff6-gau-rage-checklist/issues)
 
 ## Disclaimer
 
 This is an unofficial fan-made project and is not affiliated with or endorsed by Square Enix.
 
-FINAL FANTASY, FINAL FANTASY VI, and related names and trademarks belong to their respective owners.
+FINAL FANTASY, FINAL FANTASY VI, and related names, characters, images, and trademarks belong to their respective owners.
+
+The Zaghrem sprite shown in this repository is used for identification and presentation in connection with this non-commercial fan project.
 
 ## License
 
