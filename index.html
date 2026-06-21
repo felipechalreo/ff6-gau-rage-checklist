@@ -315,6 +315,97 @@ footer {
   }
   .notice, .rage-info small, .position, footer { color:#444; }
 }
+
+/* Mobile width containment */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.header-inner,
+main,
+footer,
+.controls,
+.progress-controls,
+.bestiary-control,
+.bestiary-input-row,
+.progress-row,
+.rage-grid,
+.rage-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.header-inner,
+main,
+footer,
+.rage-grid,
+.rage-card {
+  width: 100%;
+}
+
+input[type=search],
+input[type=number],
+select,
+button {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.rage-card {
+  overflow: hidden;
+}
+
+.badges {
+  min-width: 0;
+  max-width: 38%;
+  flex-shrink: 1;
+}
+
+.badge {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width:650px) {
+  .header-inner,
+  main {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .controls {
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  }
+
+  .progress-controls,
+  .rage-grid {
+    grid-template-columns: minmax(0,1fr);
+  }
+
+  .bestiary-input-row {
+    flex-wrap: wrap;
+  }
+
+  .rage-card {
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .rage-info {
+    min-width: 0;
+  }
+
+  .badges {
+    max-width: 34%;
+  }
+}
+
 </style>
 </head>
 <body>
