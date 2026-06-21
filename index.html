@@ -316,7 +316,7 @@ footer {
   .notice, .rage-info small, .position, footer { color:#444; }
 }
 
-/* Mobile width containment */
+/* v1.0.1 — mobile layout fix */
 html,
 body {
   width: 100%;
@@ -326,31 +326,25 @@ body {
 
 .header-inner,
 main,
-footer,
+footer {
+  width: 100%;
+  max-width: 1180px;
+}
+
 .controls,
 .progress-controls,
 .bestiary-control,
 .bestiary-input-row,
 .progress-row,
 .rage-grid,
-.rage-card {
+.rage-card,
+.rage-info,
+.badges {
   min-width: 0;
-  max-width: 100%;
 }
 
-.header-inner,
-main,
-footer,
 .rage-grid,
 .rage-card {
-  width: 100%;
-}
-
-input[type=search],
-input[type=number],
-select,
-button {
-  min-width: 0;
   max-width: 100%;
 }
 
@@ -359,9 +353,8 @@ button {
 }
 
 .badges {
-  min-width: 0;
-  max-width: 38%;
-  flex-shrink: 1;
+  flex: 0 1 auto;
+  max-width: 42%;
 }
 
 .badge {
@@ -370,39 +363,69 @@ button {
   text-overflow: ellipsis;
 }
 
-@media (max-width:650px) {
+@media (max-width: 650px) {
   .header-inner,
-  main {
+  main,
+  footer {
     padding-left: 12px;
     padding-right: 12px;
   }
 
   .controls {
-    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .controls input[type="search"] {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .controls select,
+  .controls button,
+  .progress-controls button {
+    width: 100%;
   }
 
   .progress-controls,
   .rage-grid {
-    grid-template-columns: minmax(0,1fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .bestiary-input-row {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .bestiary-input-row input {
+    width: 100%;
+  }
+
+  .progress-row {
     flex-wrap: wrap;
   }
 
-  .rage-card {
-    box-sizing: border-box;
+  .progress-track {
     min-width: 0;
-    width: 100%;
-    max-width: 100%;
   }
 
-  .rage-info {
+  .counter {
     min-width: 0;
+    white-space: nowrap;
+  }
+
+  .rage-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .rage-info strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .badges {
-    max-width: 34%;
+    max-width: 32%;
   }
 }
 
@@ -416,7 +439,7 @@ button {
 
     <div class="controls">
       <input id="search" type="search" placeholder="Search monster or ability…">
-      <select id="filter" aria-label="Filtro">
+      <select id="filter" aria-label="Filter">
         <option value="all">All available</option>
         <option value="done">Owned only</option>
         <option value="missing">Missing only</option>
@@ -542,7 +565,6 @@ button {
   </details>
 
   <div class="rage-grid" id="rageGrid">
-
       <label
         class="rage-card"
         data-search="guard critical b#001"
@@ -562,8 +584,6 @@ button {
           <span class="badge normal-badge">B#001</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="imperial soldier fire b#037"
@@ -583,8 +603,6 @@ button {
           <span class="badge normal-badge">B#037</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="templar fira b#038"
@@ -604,8 +622,6 @@ button {
           <span class="badge normal-badge">B#038</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="ninja water scroll b#112"
@@ -625,8 +641,6 @@ button {
           <span class="badge normal-badge">B#112</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="samurai lullaby b#205"
@@ -646,8 +660,6 @@ button {
           <span class="badge normal-badge">B#205</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="borghese holy b#143"
@@ -667,8 +679,6 @@ button {
           <span class="badge normal-badge">B#143</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="magna roader [purple] bio b#084"
@@ -688,8 +698,6 @@ button {
           <span class="badge normal-badge">B#084</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="yojimbo shock b#239"
@@ -709,8 +717,6 @@ button {
           <span class="badge normal-badge">B#239</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="cloud thundara b#042"
@@ -730,8 +736,6 @@ button {
           <span class="badge normal-badge">B#042</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="misty cura b#156"
@@ -751,8 +755,6 @@ button {
           <span class="badge normal-badge">B#156</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="al jabr thundaga b#206"
@@ -772,8 +774,6 @@ button {
           <span class="badge normal-badge">B#206</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="zaghrem stone b#017"
@@ -793,8 +793,6 @@ button {
           <span class="badge normal-badge">B#017</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="apocrypha lv. 3 confuse b#108"
@@ -814,8 +812,6 @@ button {
           <span class="badge normal-badge">B#108</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="dark force tsunami b#240"
@@ -835,8 +831,6 @@ button {
           <span class="badge normal-badge">B#240</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="angel whisper gravity b#043"
@@ -856,8 +850,6 @@ button {
           <span class="badge normal-badge">B#043</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="oversoul will o&#x27; the wisp b#044"
@@ -870,15 +862,13 @@ button {
         <span class="position">016</span>
         <span class="rage-info">
           <strong>Oversoul</strong>
-          <small>Will O&#x27; The Wisp</small>
+          <small>Will o&#x27; the Wisp</small>
         </span>
         <span class="badges">
           
           <span class="badge normal-badge">B#044</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="skeletal horror banish b#147"
@@ -898,8 +888,6 @@ button {
           <span class="badge normal-badge">B#147</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="commander break b#025"
@@ -919,8 +907,6 @@ button {
           <span class="badge normal-badge">B#025</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="mu snare b#016"
@@ -940,8 +926,6 @@ button {
           <span class="badge normal-badge">B#016</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="wererat poison b#004"
@@ -961,8 +945,6 @@ button {
           <span class="badge normal-badge">B#004</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="mugbear net b#148"
@@ -982,13 +964,9 @@ button {
           <span class="badge normal-badge">B#148</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 2</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="belmodar megavolt b#014"
@@ -1008,8 +986,6 @@ button {
           <span class="badge normal-badge">B#014</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="muud suud snowstorm b#241"
@@ -1029,8 +1005,6 @@ button {
           <span class="badge normal-badge">B#241</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="leaf bunny incisor b#007"
@@ -1050,8 +1024,6 @@ button {
           <span class="badge normal-badge">B#007</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="stray cat cat scratch b#032"
@@ -1071,8 +1043,6 @@ button {
           <span class="badge normal-badge">B#032</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="silver lobo chomp b#002"
@@ -1092,8 +1062,6 @@ button {
           <span class="badge normal-badge">B#002</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="doberman bite unnumbered · imperial camp"
@@ -1113,8 +1081,6 @@ button {
           <span class="badge special-badge">Unnumbered · Imperial Camp</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="megalodoth snowstorm b#003"
@@ -1134,8 +1100,6 @@ button {
           <span class="badge normal-badge">B#003</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="fidor pounce b#053"
@@ -1155,8 +1119,6 @@ button {
           <span class="badge normal-badge">B#053</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="briareus cyclonic b#094"
@@ -1176,8 +1138,6 @@ button {
           <span class="badge normal-badge">B#094</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="suriander aqua breath b#207"
@@ -1197,8 +1157,6 @@ button {
           <span class="badge normal-badge">B#207</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="chimera aqua breath b#096"
@@ -1218,8 +1176,6 @@ button {
           <span class="badge normal-badge">B#096</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="behemoth meteor b#111"
@@ -1239,8 +1195,6 @@ button {
           <span class="badge normal-badge">B#111</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="fafnir traveler b#114"
@@ -1260,8 +1214,6 @@ button {
           <span class="badge normal-badge">B#114</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="lesser lopros fireball b#021"
@@ -1281,8 +1233,6 @@ button {
           <span class="badge normal-badge">B#021</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="fossil dragon sandstorm b#056"
@@ -1302,8 +1252,6 @@ button {
           <span class="badge normal-badge">B#056</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="holy dragon holy boss — world of ruin"
@@ -1323,8 +1271,6 @@ button {
           <span class="badge special-badge">Boss — World of Ruin</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="fiend dragon northern cross b#242"
@@ -1344,8 +1290,6 @@ button {
           <span class="badge normal-badge">B#242</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="brachiosaur disaster b#171"
@@ -1365,8 +1309,6 @@ button {
           <span class="badge normal-badge">B#171</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="tyrannosaur meteor b#172"
@@ -1386,8 +1328,6 @@ button {
           <span class="badge normal-badge">B#172</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="darkwind break b#008"
@@ -1407,8 +1347,6 @@ button {
           <span class="badge normal-badge">B#008</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="aepyornis featherdust b#033"
@@ -1428,13 +1366,9 @@ button {
           <span class="badge normal-badge">B#033</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 3</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="vulture shamshir b#057"
@@ -1454,8 +1388,6 @@ button {
           <span class="badge normal-badge">B#057</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="vasegiatta cyclonic b#196"
@@ -1475,8 +1407,6 @@ button {
           <span class="badge normal-badge">B#196</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="zokka net b#123"
@@ -1496,8 +1426,6 @@ button {
           <span class="badge normal-badge">B#123</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="trapper lv. 3 confuse b#079"
@@ -1517,8 +1445,6 @@ button {
           <span class="badge normal-badge">B#079</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="hornet iron stinger b#012"
@@ -1538,8 +1464,6 @@ button {
           <span class="badge normal-badge">B#012</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="nettlehopper berserk b#034"
@@ -1559,8 +1483,6 @@ button {
           <span class="badge normal-badge">B#034</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="delta beetle megavolt b#126"
@@ -1580,8 +1502,6 @@ button {
           <span class="badge normal-badge">B#126</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="killer mantis metal cutter b#115"
@@ -1601,8 +1521,6 @@ button {
           <span class="badge normal-badge">B#115</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="trillium bio b#018"
@@ -1622,8 +1540,6 @@ button {
           <span class="badge normal-badge">B#018</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="rafflesia entice b#157"
@@ -1643,8 +1559,6 @@ button {
           <span class="badge normal-badge">B#157</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="tumbleweed lifeshaver b#173"
@@ -1664,8 +1578,6 @@ button {
           <span class="badge normal-badge">B#173</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="vampire thorn bio b#127"
@@ -1685,8 +1597,6 @@ button {
           <span class="badge normal-badge">B#127</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="cartagra poison barb b#027"
@@ -1706,8 +1616,6 @@ button {
           <span class="badge normal-badge">B#027</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="nautiloid ink b#022"
@@ -1727,8 +1635,6 @@ button {
           <span class="badge normal-badge">B#022</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="exocite pincer b#023"
@@ -1748,8 +1654,6 @@ button {
           <span class="badge normal-badge">B#023</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="anguiform aqua breath b#050"
@@ -1769,8 +1673,6 @@ button {
           <span class="badge normal-badge">B#050</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="leap frog sticky goo b#174"
@@ -1790,8 +1692,6 @@ button {
           <span class="badge normal-badge">B#174</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="lizard break b#128"
@@ -1811,8 +1711,6 @@ button {
           <span class="badge normal-badge">B#128</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="litwor chicken quake b#068"
@@ -1832,8 +1730,6 @@ button {
           <span class="badge normal-badge">B#068</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="slagworm sandstorm b#175"
@@ -1853,8 +1749,6 @@ button {
           <span class="badge normal-badge">B#175</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="hell&#x27;s rider venomist boss #273"
@@ -1874,13 +1768,9 @@ button {
           <span class="badge special-badge">Boss #273</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 4</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="onion knight imp b#075"
@@ -1900,8 +1790,6 @@ button {
           <span class="badge normal-badge">B#075</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="magitek armor magitek laser boss #266"
@@ -1921,8 +1809,6 @@ button {
           <span class="badge special-badge">Boss #266</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="sky armor magitek laser b#104"
@@ -1942,8 +1828,6 @@ button {
           <span class="badge normal-badge">B#104</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="satellite sonic boom b#039"
@@ -1963,8 +1847,6 @@ button {
           <span class="badge normal-badge">B#039</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="armored weapon gravity bomb b#216"
@@ -1984,8 +1866,6 @@ button {
           <span class="badge normal-badge">B#216</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="spritzer blaze b#005"
@@ -2005,8 +1885,6 @@ button {
           <span class="badge normal-badge">B#005</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="flan sticky goo b#080"
@@ -2026,8 +1904,6 @@ button {
           <span class="badge normal-badge">B#080</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="outcast lifeshaver b#087"
@@ -2047,8 +1923,6 @@ button {
           <span class="badge normal-badge">B#087</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="humpty poison b#134"
@@ -2068,8 +1942,6 @@ button {
           <span class="badge normal-badge">B#134</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="brainpan 1000 needles b#106"
@@ -2089,8 +1961,6 @@ button {
           <span class="badge normal-badge">B#106</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="cruller sticky goo b#135"
@@ -2110,8 +1980,6 @@ button {
           <span class="badge normal-badge">B#135</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="cactuar 1000 needles b#176"
@@ -2131,8 +1999,6 @@ button {
           <span class="badge normal-badge">B#176</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="bandit self-destruct b#006"
@@ -2152,8 +2018,6 @@ button {
           <span class="badge normal-badge">B#006</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="harvester haste b#062"
@@ -2173,8 +2037,6 @@ button {
           <span class="badge normal-badge">B#062</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="bomb blaze b#045"
@@ -2194,8 +2056,6 @@ button {
           <span class="badge normal-badge">B#045</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="still life lullaby b#158"
@@ -2215,8 +2075,6 @@ button {
           <span class="badge normal-badge">B#158</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="lunatys meteor b#217"
@@ -2236,8 +2094,6 @@ button {
           <span class="badge normal-badge">B#217</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="veil dancer blizzara b#065"
@@ -2257,8 +2113,6 @@ button {
           <span class="badge normal-badge">B#065</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="hill gigas magnitude 8 b#063"
@@ -2278,8 +2132,6 @@ button {
           <span class="badge normal-badge">B#063</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="tonberry break b#189"
@@ -2299,8 +2151,6 @@ button {
           <span class="badge normal-badge">B#189</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="magic urn curaga b#221"
@@ -2320,13 +2170,9 @@ button {
           <span class="badge normal-badge">B#221</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 5</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="mover meltdown b#243"
@@ -2346,8 +2192,6 @@ button {
           <span class="badge normal-badge">B#243</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="figaro lizard dischord b#218"
@@ -2367,8 +2211,6 @@ button {
           <span class="badge normal-badge">B#218</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="devoahan slowga b#129"
@@ -2388,8 +2230,6 @@ button {
           <span class="badge normal-badge">B#129</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="aspiran gigavolt b#051"
@@ -2409,8 +2249,6 @@ button {
           <span class="badge normal-badge">B#051</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="ghost thundara b#040"
@@ -2430,8 +2268,6 @@ button {
           <span class="badge normal-badge">B#040</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="crawler traveler b#177"
@@ -2451,8 +2287,6 @@ button {
           <span class="badge normal-badge">B#177</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="sand ray tail b#009"
@@ -2472,8 +2306,6 @@ button {
           <span class="badge normal-badge">B#009</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="alacran numb b#010"
@@ -2493,8 +2325,6 @@ button {
           <span class="badge normal-badge">B#010</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="actinian clamp b#052"
@@ -2514,8 +2344,6 @@ button {
           <span class="badge normal-badge">B#052</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="sandhorse sandstorm b#130"
@@ -2535,8 +2363,6 @@ button {
           <span class="badge normal-badge">B#130</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="darkside blizzara unnumbered · narshe"
@@ -2556,8 +2382,6 @@ button {
           <span class="badge special-badge">Unnumbered · Narshe</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="malboro bad breath b#144"
@@ -2577,8 +2401,6 @@ button {
           <span class="badge normal-badge">B#144</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="urok digestive fluid b#013"
@@ -2598,8 +2420,6 @@ button {
           <span class="badge normal-badge">B#013</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="foper death b#011"
@@ -2619,8 +2439,6 @@ button {
           <span class="badge normal-badge">B#011</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="guard leader wind slash boss #265"
@@ -2640,8 +2458,6 @@ button {
           <span class="badge special-badge">Boss #265</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="corporal swing b#054"
@@ -2661,8 +2477,6 @@ button {
           <span class="badge normal-badge">B#054</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="general cura b#081"
@@ -2682,8 +2496,6 @@ button {
           <span class="badge normal-badge">B#081</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="covert wind slash b#199"
@@ -2703,8 +2515,6 @@ button {
           <span class="badge normal-badge">B#199</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="kamui snowstorm b#200"
@@ -2724,8 +2534,6 @@ button {
           <span class="badge normal-badge">B#200</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="warlock holy b#231"
@@ -2745,8 +2553,6 @@ button {
           <span class="badge normal-badge">B#231</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="cherry holy b#244"
@@ -2766,13 +2572,9 @@ button {
           <span class="badge normal-badge">B#244</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 6</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="joker thundara b#069"
@@ -2792,8 +2594,6 @@ button {
           <span class="badge normal-badge">B#069</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="iron fist stone b#058"
@@ -2813,8 +2613,6 @@ button {
           <span class="badge normal-badge">B#058</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="devil thundaga b#219"
@@ -2834,8 +2632,6 @@ button {
           <span class="badge normal-badge">B#219</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="provoker imp b#088"
@@ -2855,8 +2651,6 @@ button {
           <span class="badge normal-badge">B#088</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="cloudwraith flare b#145"
@@ -2876,8 +2670,6 @@ button {
           <span class="badge normal-badge">B#145</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="mahadeva death b#232"
@@ -2897,8 +2689,6 @@ button {
           <span class="badge normal-badge">B#232</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="vector hound bite b#026"
@@ -2918,8 +2708,6 @@ button {
           <span class="badge normal-badge">B#026</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="peeper white wind b#116"
@@ -2939,8 +2727,6 @@ button {
           <span class="badge normal-badge">B#116</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="stunner incisors b#066"
@@ -2960,8 +2746,6 @@ button {
           <span class="badge normal-badge">B#066</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="sorath cave in b#233"
@@ -2981,8 +2765,6 @@ button {
           <span class="badge normal-badge">B#233</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="destroyer reraise b#082"
@@ -3002,8 +2784,6 @@ button {
           <span class="badge normal-badge">B#082</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="chippirabbit raise b#035"
@@ -3023,8 +2803,6 @@ button {
           <span class="badge normal-badge">B#035</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="coeurl cat blaster b#159"
@@ -3044,8 +2822,6 @@ button {
           <span class="badge normal-badge">B#159</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="bloodfang drain b#059"
@@ -3065,8 +2841,6 @@ button {
           <span class="badge normal-badge">B#059</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="hunting hound bite b#055"
@@ -3086,8 +2860,6 @@ button {
           <span class="badge normal-badge">B#055</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="gorgias snowstorm b#019"
@@ -3107,8 +2879,6 @@ button {
           <span class="badge normal-badge">B#019</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="don tackle b#070"
@@ -3128,8 +2898,6 @@ button {
           <span class="badge normal-badge">B#070</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="murussu stop b#117"
@@ -3149,8 +2917,6 @@ button {
           <span class="badge normal-badge">B#117</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="wartpuck rasp b#201"
@@ -3170,8 +2936,6 @@ button {
           <span class="badge normal-badge">B#201</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="gorgimera avalanche b#153"
@@ -3191,8 +2955,6 @@ button {
           <span class="badge normal-badge">B#153</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="behemoth king firaga boss — world of ruin"
@@ -3212,13 +2974,9 @@ button {
           <span class="badge special-badge">Boss — World of Ruin</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 7</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="vector lythos white wind b#245"
@@ -3238,8 +2996,6 @@ button {
           <span class="badge normal-badge">B#245</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="wyvern cyclonic b#071"
@@ -3259,8 +3015,6 @@ button {
           <span class="badge normal-badge">B#071</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="zombie dragon doom b#089"
@@ -3280,8 +3034,6 @@ button {
           <span class="badge normal-badge">B#089</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="dragon revenge blast b#109"
@@ -3301,8 +3053,6 @@ button {
           <span class="badge normal-badge">B#109</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="primeval dragon firaga b#246"
@@ -3322,8 +3072,6 @@ button {
           <span class="badge normal-badge">B#246</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="weredragon death b#208"
@@ -3343,8 +3091,6 @@ button {
           <span class="badge normal-badge">B#208</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="cirpius hastega b#020"
@@ -3364,8 +3110,6 @@ button {
           <span class="badge normal-badge">B#020</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="sprinter aero b#178"
@@ -3385,8 +3129,6 @@ button {
           <span class="badge normal-badge">B#178</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="lenergia shamshir b#083"
@@ -3406,8 +3148,6 @@ button {
           <span class="badge normal-badge">B#083</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="marchosias aero b#140"
@@ -3427,8 +3167,6 @@ button {
           <span class="badge normal-badge">B#140</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="gloomwind net b#197"
@@ -3448,8 +3186,6 @@ button {
           <span class="badge normal-badge">B#197</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="dropper confuse b#136"
@@ -3469,8 +3205,6 @@ button {
           <span class="badge normal-badge">B#136</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="rock wasp sleepsting b#060"
@@ -3490,8 +3224,6 @@ button {
           <span class="badge normal-badge">B#060</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="grasswyrm berserk b#072"
@@ -3511,8 +3243,6 @@ button {
           <span class="badge normal-badge">B#072</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="luridan rock slide b#150"
@@ -3532,8 +3262,6 @@ button {
           <span class="badge normal-badge">B#150</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="twinscythe metal cutter b#154"
@@ -3553,8 +3281,6 @@ button {
           <span class="badge normal-badge">B#154</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="paraladia poison touch b#061"
@@ -3574,8 +3300,6 @@ button {
           <span class="badge normal-badge">B#061</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="exoray venomist b#146"
@@ -3595,8 +3319,6 @@ button {
           <span class="badge normal-badge">B#146</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="crusher lifeshaver b#160"
@@ -3616,8 +3338,6 @@ button {
           <span class="badge normal-badge">B#160</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="ouroboros quake b#163"
@@ -3637,8 +3357,6 @@ button {
           <span class="badge normal-badge">B#163</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="acrophies numbclaw b#028"
@@ -3658,13 +3376,9 @@ button {
           <span class="badge normal-badge">B#028</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 8</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="schmidt mega berserk b#209"
@@ -3684,8 +3398,6 @@ button {
           <span class="badge normal-badge">B#209</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="devourer shell slam b#095"
@@ -3705,8 +3417,6 @@ button {
           <span class="badge normal-badge">B#095</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="cancer esuna b#131"
@@ -3726,8 +3436,6 @@ button {
           <span class="badge normal-badge">B#131</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="gigantoad sticky goo b#118"
@@ -3747,8 +3455,6 @@ button {
           <span class="badge normal-badge">B#118</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="basilisk break b#179"
@@ -3768,8 +3474,6 @@ button {
           <span class="badge normal-badge">B#179</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="medusa chicken break b#234"
@@ -3789,8 +3493,6 @@ button {
           <span class="badge normal-badge">B#234</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="landworm magnitude 8 b#247"
@@ -3810,8 +3512,6 @@ button {
           <span class="badge normal-badge">B#247</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="test rider flash rain b#182"
@@ -3831,8 +3531,6 @@ button {
           <span class="badge normal-badge">B#182</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="pluto armor magitek laser b#210"
@@ -3852,8 +3550,6 @@ button {
           <span class="badge normal-badge">B#210</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="onion dasher traveler b#190"
@@ -3873,8 +3569,6 @@ button {
           <span class="badge normal-badge">B#190</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="heavy armor magitek laser b#024"
@@ -3894,8 +3588,6 @@ button {
           <span class="badge normal-badge">B#024</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="chaser plasma b#086"
@@ -3915,8 +3607,6 @@ button {
           <span class="badge normal-badge">B#086</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="gamma dischord b#248"
@@ -3936,8 +3626,6 @@ button {
           <span class="badge normal-badge">B#248</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="poplium cling b#041"
@@ -3957,8 +3645,6 @@ button {
           <span class="badge normal-badge">B#041</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="intangir transfusion b#097"
@@ -3978,8 +3664,6 @@ button {
           <span class="badge normal-badge">B#097</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="misfit lifeshaver b#107"
@@ -3999,8 +3683,6 @@ button {
           <span class="badge normal-badge">B#107</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="creature lifeshaver b#235"
@@ -4020,8 +3702,6 @@ button {
           <span class="badge normal-badge">B#235</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="enuo tsunami b#220"
@@ -4041,8 +3721,6 @@ button {
           <span class="badge normal-badge">B#220</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="deepeye dread gaze b#141"
@@ -4062,8 +3740,6 @@ button {
           <span class="badge normal-badge">B#141</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="unseelie shell b#015"
@@ -4083,8 +3759,6 @@ button {
           <span class="badge normal-badge">B#015</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="neck hunter imp b#137"
@@ -4104,13 +3778,9 @@ button {
           <span class="badge normal-badge">B#137</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 9</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="grenade blaze b#073"
@@ -4130,8 +3800,6 @@ button {
           <span class="badge normal-badge">B#073</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="alluring rider doom b#211"
@@ -4151,8 +3819,6 @@ button {
           <span class="badge normal-badge">B#211</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="pandora revenge blast b#212"
@@ -4172,8 +3838,6 @@ button {
           <span class="badge normal-badge">B#212</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="blade dancer osmose b#161"
@@ -4193,8 +3857,6 @@ button {
           <span class="badge normal-badge">B#161</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="gigantos magnitude 8 boss #293"
@@ -4214,8 +3876,6 @@ button {
           <span class="badge special-badge">Boss #293</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="magna roader [red] silence b#085"
@@ -4235,8 +3895,6 @@ button {
           <span class="badge normal-badge">B#085</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="lycaon blaster b#180"
@@ -4256,8 +3914,6 @@ button {
           <span class="badge normal-badge">B#180</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="parasite gigavolt b#213"
@@ -4277,8 +3933,6 @@ button {
           <span class="badge normal-badge">B#213</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="land ray mighty guard b#119"
@@ -4298,8 +3952,6 @@ button {
           <span class="badge normal-badge">B#119</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="antares magnitude 8 b#090"
@@ -4319,8 +3971,6 @@ button {
           <span class="badge normal-badge">B#090</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="anemone gigavolt b#191"
@@ -4340,8 +3990,6 @@ button {
           <span class="badge normal-badge">B#191</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="moonform flash rain b#236"
@@ -4361,8 +4009,6 @@ button {
           <span class="badge normal-badge">B#236</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="specter fire unnumbered · narshe"
@@ -4382,8 +4028,6 @@ button {
           <span class="badge special-badge">Unnumbered · Narshe</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="great malboro bio b#249"
@@ -4403,8 +4047,6 @@ button {
           <span class="badge normal-badge">B#249</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="bonnacon sticky goo b#099"
@@ -4424,8 +4066,6 @@ button {
           <span class="badge normal-badge">B#099</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="oceanus magnitude 8 b#132"
@@ -4445,8 +4085,6 @@ button {
           <span class="badge normal-badge">B#132</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="living dead osmose b#046"
@@ -4466,8 +4104,6 @@ button {
           <span class="badge normal-badge">B#046</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="face 1000 needles b#164"
@@ -4487,8 +4123,6 @@ button {
           <span class="badge normal-badge">B#164</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="outsider holy b#250"
@@ -4508,8 +4142,6 @@ button {
           <span class="badge normal-badge">B#250</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="coco overture b#214"
@@ -4529,8 +4161,6 @@ button {
           <span class="badge normal-badge">B#214</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="zeveak flash rain b#165"
@@ -4550,13 +4180,9 @@ button {
           <span class="badge normal-badge">B#165</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 10</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="nightwalker drain b#124"
@@ -4576,8 +4202,6 @@ button {
           <span class="badge normal-badge">B#124</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="demon knight shockwave b#251"
@@ -4597,8 +4221,6 @@ button {
           <span class="badge normal-badge">B#251</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="imperial elite protect b#092"
@@ -4618,8 +4240,6 @@ button {
           <span class="badge normal-badge">B#092</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="desert hare cura b#133"
@@ -4639,8 +4259,6 @@ button {
           <span class="badge normal-badge">B#133</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="wizard gravity b#183"
@@ -4660,8 +4278,6 @@ button {
           <span class="badge normal-badge">B#183</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="devil fist will o&#x27; the wisp b#149"
@@ -4674,15 +4290,13 @@ button {
         <span class="position">195</span>
         <span class="rage-info">
           <strong>Devil Fist</strong>
-          <small>Will O&#x27; the Wisp</small>
+          <small>Will o&#x27; the Wisp</small>
         </span>
         <span class="badges">
           
           <span class="badge normal-badge">B#149</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="illuyankas gigavolt b#192"
@@ -4702,8 +4316,6 @@ button {
           <span class="badge normal-badge">B#192</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="sergeant reflect b#076"
@@ -4723,8 +4335,6 @@ button {
           <span class="badge normal-badge">B#076</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="aspidochelon landslide b#237"
@@ -4744,8 +4354,6 @@ button {
           <span class="badge normal-badge">B#237</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="knotty stone b#193"
@@ -4765,8 +4373,6 @@ button {
           <span class="badge normal-badge">B#193</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="luna wolf face chomp b#120"
@@ -4786,8 +4392,6 @@ button {
           <span class="badge normal-badge">B#120</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="belzecue gravity b#077"
@@ -4807,8 +4411,6 @@ button {
           <span class="badge normal-badge">B#077</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="caladrius acid rain b#162"
@@ -4828,8 +4430,6 @@ button {
           <span class="badge normal-badge">B#162</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="tzakmaqiel imp b#194"
@@ -4849,8 +4449,6 @@ button {
           <span class="badge normal-badge">B#194</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="lukhavi snowstorm b#184"
@@ -4870,8 +4468,6 @@ button {
           <span class="badge normal-badge">B#184</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="eukaryote fira unnumbered · narshe"
@@ -4891,8 +4487,6 @@ button {
           <span class="badge special-badge">Unnumbered · Narshe</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="land grillon wing snap b#100"
@@ -4912,8 +4506,6 @@ button {
           <span class="badge normal-badge">B#100</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="goetia libra b#067"
@@ -4933,8 +4525,6 @@ button {
           <span class="badge normal-badge">B#067</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="greater mantis wind slash b#181"
@@ -4954,8 +4544,6 @@ button {
           <span class="badge normal-badge">B#181</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="bogy growl b#139"
@@ -4975,8 +4563,6 @@ button {
           <span class="badge normal-badge">B#139</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="purusa rock slide b#198"
@@ -4996,13 +4582,9 @@ button {
           <span class="badge normal-badge">B#198</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 11</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="black dragon snowstorm b#121"
@@ -5022,8 +4604,6 @@ button {
           <span class="badge normal-badge">B#121</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="adamankary acid rain b#101"
@@ -5043,8 +4623,6 @@ button {
           <span class="badge normal-badge">B#101</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="dante lv. 3 confuse b#138"
@@ -5064,8 +4642,6 @@ button {
           <span class="badge normal-badge">B#138</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="platinum dragon cyclonic b#110"
@@ -5085,8 +4661,6 @@ button {
           <span class="badge normal-badge">B#110</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="duel armor megavolt b#252"
@@ -5106,8 +4680,6 @@ button {
           <span class="badge normal-badge">B#252</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="psychos lifeshaver b#187"
@@ -5127,8 +4699,6 @@ button {
           <span class="badge normal-badge">B#187</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="mousse transfusion b#142"
@@ -5148,8 +4718,6 @@ button {
           <span class="badge normal-badge">B#142</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="shambling corpse thundaga b#202"
@@ -5169,8 +4737,6 @@ button {
           <span class="badge normal-badge">B#202</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="punisher thundaga b#151"
@@ -5190,8 +4756,6 @@ button {
           <span class="badge normal-badge">B#151</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="balloon self-destruct b#098"
@@ -5211,8 +4775,6 @@ button {
           <span class="badge normal-badge">B#098</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="gobbledygook vanish b#064"
@@ -5232,8 +4794,6 @@ button {
           <span class="badge normal-badge">B#064</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="great behemoth meteor b#253"
@@ -5253,8 +4813,6 @@ button {
           <span class="badge normal-badge">B#253</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="scorpion poison b#125"
@@ -5274,8 +4832,6 @@ button {
           <span class="badge normal-badge">B#125</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="chaos dragon disaster b#170"
@@ -5295,8 +4851,6 @@ button {
           <span class="badge normal-badge">B#170</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="spitfire magitek laser b#105"
@@ -5316,8 +4870,6 @@ button {
           <span class="badge normal-badge">B#105</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="vector chimera aqua breath b#254"
@@ -5337,8 +4889,6 @@ button {
           <span class="badge normal-badge">B#254</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="lich fira b#091"
@@ -5358,8 +4908,6 @@ button {
           <span class="badge normal-badge">B#091</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="rukh shamshir b#122"
@@ -5379,8 +4927,6 @@ button {
           <span class="badge normal-badge">B#122</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="magna roader [yellow] haste b#185"
@@ -5400,8 +4946,6 @@ button {
           <span class="badge normal-badge">B#185</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="bug stop b#074"
@@ -5421,8 +4965,6 @@ button {
           <span class="badge normal-badge">B#074</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="seaflower sleep b#166"
@@ -5442,13 +4984,9 @@ button {
           <span class="badge normal-badge">B#166</span>
         </span>
       </label>
-        
-
       <div class="page-separator" aria-hidden="true">
         <span>Page 12</span>
       </div>
-            
-
       <label
         class="rage-card"
         data-search="fortis fireball b#255"
@@ -5468,8 +5006,6 @@ button {
           <span class="badge normal-badge">B#255</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="venobennu poison b#103"
@@ -5489,8 +5025,6 @@ button {
           <span class="badge normal-badge">B#103</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="galypdes cyclonic b#167"
@@ -5510,8 +5044,6 @@ button {
           <span class="badge normal-badge">B#167</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="junk transfusion b#256"
@@ -5531,8 +5063,6 @@ button {
           <span class="badge normal-badge">B#256</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="mandrake leech b#102"
@@ -5552,8 +5082,6 @@ button {
           <span class="badge normal-badge">B#102</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="valeor stone b#030"
@@ -5573,8 +5101,6 @@ button {
           <span class="badge normal-badge">B#030</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="amduscias slowga b#203"
@@ -5594,8 +5120,6 @@ button {
           <span class="badge normal-badge">B#203</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="necromancer death b#168"
@@ -5615,8 +5139,6 @@ button {
           <span class="badge normal-badge">B#168</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="glasya labolas revenge blast b#152"
@@ -5636,8 +5158,6 @@ button {
           <span class="badge normal-badge">B#152</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="magna roader [brown] lv. 4 flare b#186"
@@ -5657,8 +5177,6 @@ button {
           <span class="badge normal-badge">B#186</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="wild rat scratch b#031"
@@ -5678,8 +5196,6 @@ button {
           <span class="badge normal-badge">B#031</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="gold bear gouge b#029"
@@ -5699,8 +5215,6 @@ button {
           <span class="badge normal-badge">B#029</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="innosent venomist b#257"
@@ -5720,8 +5234,6 @@ button {
           <span class="badge normal-badge">B#257</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="clymenus fira b#169"
@@ -5741,8 +5253,6 @@ button {
           <span class="badge normal-badge">B#169</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="garm bodyslam b#188"
@@ -5762,8 +5272,6 @@ button {
           <span class="badge normal-badge">B#188</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="daedalus meltdown b#258"
@@ -5783,8 +5291,6 @@ button {
           <span class="badge normal-badge">B#258</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="baalzephon blizzaga b#204"
@@ -5804,8 +5310,6 @@ button {
           <span class="badge normal-badge">B#204</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="ahriman roulette b#259"
@@ -5825,8 +5329,6 @@ button {
           <span class="badge normal-badge">B#259</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="death machine death b#260"
@@ -5846,8 +5348,6 @@ button {
           <span class="badge normal-badge">B#260</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
         data-search="metal hitman dischord b#261"
@@ -5867,11 +5367,46 @@ button {
           <span class="badge normal-badge">B#261</span>
         </span>
       </label>
-        
-
       <label
         class="rage-card"
-        data-search="io flare star b#[{"name": "Guard", "ability": "Critical", "initial": false, "bestiary": 1, "availabilityType": "normal", "availabilityLabel": "B#001"}, {"name": "Imperial Soldier", "ability": "Fire", "initial": false, "bestiary": 37, "availabilityType": "normal", "availabilityLabel": "B#037"}, {"name": "Templar", "ability": "Fira", "initial": false, "bestiary": 38, "availabilityType": "normal", "availabilityLabel": "B#038"}, {"name": "Ninja", "ability": "Water Scroll", "initial": false, "bestiary": 112, "availabilityType": "normal", "availabilityLabel": "B#112"}, {"name": "Samurai", "ability": "Lullaby", "initial": false, "bestiary": 205, "availabilityType": "normal", "availabilityLabel": "B#205"}, {"name": "Borghese", "ability": "Holy", "initial": false, "bestiary": 143, "availabilityType": "normal", "availabilityLabel": "B#143"}, {"name": "Magna Roader [Purple]", "ability": "Bio", "initial": false, "bestiary": 84, "availabilityType": "normal", "availabilityLabel": "B#084"}, {"name": "Yojimbo", "ability": "Shock", "initial": false, "bestiary": 239, "availabilityType": "normal", "availabilityLabel": "B#239"}, {"name": "Cloud", "ability": "Thundara", "initial": false, "bestiary": 42, "availabilityType": "normal", "availabilityLabel": "B#042"}, {"name": "Misty", "ability": "Cura", "initial": false, "bestiary": 156, "availabilityType": "normal", "availabilityLabel": "B#156"}, {"name": "Al Jabr", "ability": "Thundaga", "initial": false, "bestiary": 206, "availabilityType": "normal", "availabilityLabel": "B#206"}, {"name": "Zaghrem", "ability": "Stone", "initial": true, "bestiary": 17, "availabilityType": "normal", "availabilityLabel": "B#017"}, {"name": "Apocrypha", "ability": "Lv. 3 Confuse", "initial": false, "bestiary": 108, "availabilityType": "normal", "availabilityLabel": "B#108"}, {"name": "Dark Force", "ability": "Tsunami", "initial": false, "bestiary": 240, "availabilityType": "normal", "availabilityLabel": "B#240"}, {"name": "Angel Whisper", "ability": "Gravity", "initial": true, "bestiary": 43, "availabilityType": "normal", "availabilityLabel": "B#043"}, {"name": "Oversoul", "ability": "Will O' The Wisp", "initial": false, "bestiary": 44, "availabilityType": "normal", "availabilityLabel": "B#044"}, {"name": "Skeletal Horror", "ability": "Banish", "initial": false, "bestiary": 147, "availabilityType": "normal", "availabilityLabel": "B#147"}, {"name": "Commander", "ability": "Break", "initial": false, "bestiary": 25, "availabilityType": "normal", "availabilityLabel": "B#025"}, {"name": "Mu", "ability": "Snare", "initial": false, "bestiary": 16, "availabilityType": "normal", "availabilityLabel": "B#016"}, {"name": "Wererat", "ability": "Poison", "initial": true, "bestiary": 4, "availabilityType": "normal", "availabilityLabel": "B#004"}, {"name": "Mugbear", "ability": "Net", "initial": false, "bestiary": 148, "availabilityType": "normal", "availabilityLabel": "B#148"}, {"name": "Belmodar", "ability": "Megavolt", "initial": true, "bestiary": 14, "availabilityType": "normal", "availabilityLabel": "B#014"}, {"name": "Muud Suud", "ability": "Snowstorm", "initial": false, "bestiary": 241, "availabilityType": "normal", "availabilityLabel": "B#241"}, {"name": "Leaf Bunny", "ability": "Incisor", "initial": false, "bestiary": 7, "availabilityType": "normal", "availabilityLabel": "B#007"}, {"name": "Stray Cat", "ability": "Cat Scratch", "initial": false, "bestiary": 32, "availabilityType": "normal", "availabilityLabel": "B#032"}, {"name": "Silver Lobo", "ability": "Chomp", "initial": true, "bestiary": 2, "availabilityType": "normal", "availabilityLabel": "B#002"}, {"name": "Doberman", "ability": "Bite", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Unnumbered · Imperial Camp"}, {"name": "Megalodoth", "ability": "Snowstorm", "initial": false, "bestiary": 3, "availabilityType": "normal", "availabilityLabel": "B#003"}, {"name": "Fidor", "ability": "Pounce", "initial": false, "bestiary": 53, "availabilityType": "normal", "availabilityLabel": "B#053"}, {"name": "Briareus", "ability": "Cyclonic", "initial": false, "bestiary": 94, "availabilityType": "normal", "availabilityLabel": "B#094"}, {"name": "Suriander", "ability": "Aqua Breath", "initial": false, "bestiary": 207, "availabilityType": "normal", "availabilityLabel": "B#207"}, {"name": "Chimera", "ability": "Aqua Breath", "initial": false, "bestiary": 96, "availabilityType": "normal", "availabilityLabel": "B#096"}, {"name": "Behemoth", "ability": "Meteor", "initial": false, "bestiary": 111, "availabilityType": "normal", "availabilityLabel": "B#111"}, {"name": "Fafnir", "ability": "Traveler", "initial": false, "bestiary": 114, "availabilityType": "normal", "availabilityLabel": "B#114"}, {"name": "Lesser Lopros", "ability": "Fireball", "initial": false, "bestiary": 21, "availabilityType": "normal", "availabilityLabel": "B#021"}, {"name": "Fossil Dragon", "ability": "Sandstorm", "initial": false, "bestiary": 56, "availabilityType": "normal", "availabilityLabel": "B#056"}, {"name": "Holy Dragon", "ability": "Holy", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss — World of Ruin"}, {"name": "Fiend Dragon", "ability": "Northern Cross", "initial": false, "bestiary": 242, "availabilityType": "normal", "availabilityLabel": "B#242"}, {"name": "Brachiosaur", "ability": "Disaster", "initial": false, "bestiary": 171, "availabilityType": "normal", "availabilityLabel": "B#171"}, {"name": "Tyrannosaur", "ability": "Meteor", "initial": false, "bestiary": 172, "availabilityType": "normal", "availabilityLabel": "B#172"}, {"name": "Darkwind", "ability": "Break", "initial": false, "bestiary": 8, "availabilityType": "normal", "availabilityLabel": "B#008"}, {"name": "Aepyornis", "ability": "Featherdust", "initial": false, "bestiary": 33, "availabilityType": "normal", "availabilityLabel": "B#033"}, {"name": "Vulture", "ability": "Shamshir", "initial": false, "bestiary": 57, "availabilityType": "normal", "availabilityLabel": "B#057"}, {"name": "Vasegiatta", "ability": "Cyclonic", "initial": false, "bestiary": 196, "availabilityType": "normal", "availabilityLabel": "B#196"}, {"name": "Zokka", "ability": "Net", "initial": false, "bestiary": 123, "availabilityType": "normal", "availabilityLabel": "B#123"}, {"name": "Trapper", "ability": "Lv. 3 Confuse", "initial": false, "bestiary": 79, "availabilityType": "normal", "availabilityLabel": "B#079"}, {"name": "Hornet", "ability": "Iron Stinger", "initial": true, "bestiary": 12, "availabilityType": "normal", "availabilityLabel": "B#012"}, {"name": "Nettlehopper", "ability": "Berserk", "initial": false, "bestiary": 34, "availabilityType": "normal", "availabilityLabel": "B#034"}, {"name": "Delta Beetle", "ability": "Megavolt", "initial": false, "bestiary": 126, "availabilityType": "normal", "availabilityLabel": "B#126"}, {"name": "Killer Mantis", "ability": "Metal Cutter", "initial": false, "bestiary": 115, "availabilityType": "normal", "availabilityLabel": "B#115"}, {"name": "Trillium", "ability": "Bio", "initial": false, "bestiary": 18, "availabilityType": "normal", "availabilityLabel": "B#018"}, {"name": "Rafflesia", "ability": "Entice", "initial": false, "bestiary": 157, "availabilityType": "normal", "availabilityLabel": "B#157"}, {"name": "Tumbleweed", "ability": "Lifeshaver", "initial": false, "bestiary": 173, "availabilityType": "normal", "availabilityLabel": "B#173"}, {"name": "Vampire Thorn", "ability": "Bio", "initial": false, "bestiary": 127, "availabilityType": "normal", "availabilityLabel": "B#127"}, {"name": "Cartagra", "ability": "Poison Barb", "initial": true, "bestiary": 27, "availabilityType": "normal", "availabilityLabel": "B#027"}, {"name": "Nautiloid", "ability": "Ink", "initial": false, "bestiary": 22, "availabilityType": "normal", "availabilityLabel": "B#022"}, {"name": "Exocite", "ability": "Pincer", "initial": true, "bestiary": 23, "availabilityType": "normal", "availabilityLabel": "B#023"}, {"name": "Anguiform", "ability": "Aqua Breath", "initial": false, "bestiary": 50, "availabilityType": "normal", "availabilityLabel": "B#050"}, {"name": "Leap Frog", "ability": "Sticky Goo", "initial": false, "bestiary": 174, "availabilityType": "normal", "availabilityLabel": "B#174"}, {"name": "Lizard", "ability": "Break", "initial": false, "bestiary": 128, "availabilityType": "normal", "availabilityLabel": "B#128"}, {"name": "Litwor Chicken", "ability": "Quake", "initial": false, "bestiary": 68, "availabilityType": "normal", "availabilityLabel": "B#068"}, {"name": "Slagworm", "ability": "Sandstorm", "initial": false, "bestiary": 175, "availabilityType": "normal", "availabilityLabel": "B#175"}, {"name": "Hell's Rider", "ability": "Venomist", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss #273"}, {"name": "Onion Knight", "ability": "Imp", "initial": false, "bestiary": 75, "availabilityType": "normal", "availabilityLabel": "B#075"}, {"name": "Magitek Armor", "ability": "Magitek Laser", "initial": true, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss #266"}, {"name": "Sky Armor", "ability": "Magitek Laser", "initial": false, "bestiary": 104, "availabilityType": "normal", "availabilityLabel": "B#104"}, {"name": "Satellite", "ability": "Sonic Boom", "initial": false, "bestiary": 39, "availabilityType": "normal", "availabilityLabel": "B#039"}, {"name": "Armored Weapon", "ability": "Gravity Bomb", "initial": false, "bestiary": 216, "availabilityType": "normal", "availabilityLabel": "B#216"}, {"name": "Spritzer", "ability": "Blaze", "initial": false, "bestiary": 5, "availabilityType": "normal", "availabilityLabel": "B#005"}, {"name": "Flan", "ability": "Sticky Goo", "initial": false, "bestiary": 80, "availabilityType": "normal", "availabilityLabel": "B#080"}, {"name": "Outcast", "ability": "Lifeshaver", "initial": false, "bestiary": 87, "availabilityType": "normal", "availabilityLabel": "B#087"}, {"name": "Humpty", "ability": "Poison", "initial": false, "bestiary": 134, "availabilityType": "normal", "availabilityLabel": "B#134"}, {"name": "Brainpan", "ability": "1000 Needles", "initial": false, "bestiary": 106, "availabilityType": "normal", "availabilityLabel": "B#106"}, {"name": "Cruller", "ability": "Sticky Goo", "initial": false, "bestiary": 135, "availabilityType": "normal", "availabilityLabel": "B#135"}, {"name": "Cactuar", "ability": "1000 Needles", "initial": false, "bestiary": 176, "availabilityType": "normal", "availabilityLabel": "B#176"}, {"name": "Bandit", "ability": "Self-Destruct", "initial": false, "bestiary": 6, "availabilityType": "normal", "availabilityLabel": "B#006"}, {"name": "Harvester", "ability": "Haste", "initial": false, "bestiary": 62, "availabilityType": "normal", "availabilityLabel": "B#062"}, {"name": "Bomb", "ability": "Blaze", "initial": false, "bestiary": 45, "availabilityType": "normal", "availabilityLabel": "B#045"}, {"name": "Still Life", "ability": "Lullaby", "initial": false, "bestiary": 158, "availabilityType": "normal", "availabilityLabel": "B#158"}, {"name": "Lunatys", "ability": "Meteor", "initial": false, "bestiary": 217, "availabilityType": "normal", "availabilityLabel": "B#217"}, {"name": "Veil Dancer", "ability": "Blizzara", "initial": false, "bestiary": 65, "availabilityType": "normal", "availabilityLabel": "B#065"}, {"name": "Hill Gigas", "ability": "Magnitude 8", "initial": false, "bestiary": 63, "availabilityType": "normal", "availabilityLabel": "B#063"}, {"name": "Tonberry", "ability": "Break", "initial": false, "bestiary": 189, "availabilityType": "normal", "availabilityLabel": "B#189"}, {"name": "Magic Urn", "ability": "Curaga", "initial": false, "bestiary": 221, "availabilityType": "normal", "availabilityLabel": "B#221"}, {"name": "Mover", "ability": "Meltdown", "initial": false, "bestiary": 243, "availabilityType": "normal", "availabilityLabel": "B#243"}, {"name": "Figaro Lizard", "ability": "Dischord", "initial": false, "bestiary": 218, "availabilityType": "normal", "availabilityLabel": "B#218"}, {"name": "Devoahan", "ability": "Slowga", "initial": false, "bestiary": 129, "availabilityType": "normal", "availabilityLabel": "B#129"}, {"name": "Aspiran", "ability": "Gigavolt", "initial": false, "bestiary": 51, "availabilityType": "normal", "availabilityLabel": "B#051"}, {"name": "Ghost", "ability": "Thundara", "initial": false, "bestiary": 40, "availabilityType": "normal", "availabilityLabel": "B#040"}, {"name": "Crawler", "ability": "Traveler", "initial": false, "bestiary": 177, "availabilityType": "normal", "availabilityLabel": "B#177"}, {"name": "Sand Ray", "ability": "Tail", "initial": false, "bestiary": 9, "availabilityType": "normal", "availabilityLabel": "B#009"}, {"name": "Alacran", "ability": "Numb", "initial": false, "bestiary": 10, "availabilityType": "normal", "availabilityLabel": "B#010"}, {"name": "Actinian", "ability": "Clamp", "initial": false, "bestiary": 52, "availabilityType": "normal", "availabilityLabel": "B#052"}, {"name": "Sandhorse", "ability": "Sandstorm", "initial": false, "bestiary": 130, "availabilityType": "normal", "availabilityLabel": "B#130"}, {"name": "Darkside", "ability": "Blizzara", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Unnumbered · Narshe"}, {"name": "Malboro", "ability": "Bad Breath", "initial": false, "bestiary": 144, "availabilityType": "normal", "availabilityLabel": "B#144"}, {"name": "Urok", "ability": "Digestive Fluid", "initial": false, "bestiary": 13, "availabilityType": "normal", "availabilityLabel": "B#013"}, {"name": "Foper", "ability": "Death", "initial": false, "bestiary": 11, "availabilityType": "normal", "availabilityLabel": "B#011"}, {"name": "Guard Leader", "ability": "Wind Slash", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss #265"}, {"name": "Corporal", "ability": "Swing", "initial": false, "bestiary": 54, "availabilityType": "normal", "availabilityLabel": "B#054"}, {"name": "General", "ability": "Cura", "initial": false, "bestiary": 81, "availabilityType": "normal", "availabilityLabel": "B#081"}, {"name": "Covert", "ability": "Wind Slash", "initial": false, "bestiary": 199, "availabilityType": "normal", "availabilityLabel": "B#199"}, {"name": "Kamui", "ability": "Snowstorm", "initial": false, "bestiary": 200, "availabilityType": "normal", "availabilityLabel": "B#200"}, {"name": "Warlock", "ability": "Holy", "initial": false, "bestiary": 231, "availabilityType": "normal", "availabilityLabel": "B#231"}, {"name": "Cherry", "ability": "Holy", "initial": false, "bestiary": 244, "availabilityType": "normal", "availabilityLabel": "B#244"}, {"name": "Joker", "ability": "Thundara", "initial": false, "bestiary": 69, "availabilityType": "normal", "availabilityLabel": "B#069"}, {"name": "Iron Fist", "ability": "Stone", "initial": false, "bestiary": 58, "availabilityType": "normal", "availabilityLabel": "B#058"}, {"name": "Devil", "ability": "Thundaga", "initial": false, "bestiary": 219, "availabilityType": "normal", "availabilityLabel": "B#219"}, {"name": "Provoker", "ability": "Imp", "initial": false, "bestiary": 88, "availabilityType": "normal", "availabilityLabel": "B#088"}, {"name": "Cloudwraith", "ability": "Flare", "initial": false, "bestiary": 145, "availabilityType": "normal", "availabilityLabel": "B#145"}, {"name": "Mahadeva", "ability": "Death", "initial": false, "bestiary": 232, "availabilityType": "normal", "availabilityLabel": "B#232"}, {"name": "Vector Hound", "ability": "Bite", "initial": false, "bestiary": 26, "availabilityType": "normal", "availabilityLabel": "B#026"}, {"name": "Peeper", "ability": "White Wind", "initial": false, "bestiary": 116, "availabilityType": "normal", "availabilityLabel": "B#116"}, {"name": "Stunner", "ability": "Incisors", "initial": false, "bestiary": 66, "availabilityType": "normal", "availabilityLabel": "B#066"}, {"name": "Sorath", "ability": "Cave In", "initial": false, "bestiary": 233, "availabilityType": "normal", "availabilityLabel": "B#233"}, {"name": "Destroyer", "ability": "Reraise", "initial": false, "bestiary": 82, "availabilityType": "normal", "availabilityLabel": "B#082"}, {"name": "Chippirabbit", "ability": "Raise", "initial": false, "bestiary": 35, "availabilityType": "normal", "availabilityLabel": "B#035"}, {"name": "Coeurl Cat", "ability": "Blaster", "initial": false, "bestiary": 159, "availabilityType": "normal", "availabilityLabel": "B#159"}, {"name": "Bloodfang", "ability": "Drain", "initial": false, "bestiary": 59, "availabilityType": "normal", "availabilityLabel": "B#059"}, {"name": "Hunting Hound", "ability": "Bite", "initial": false, "bestiary": 55, "availabilityType": "normal", "availabilityLabel": "B#055"}, {"name": "Gorgias", "ability": "Snowstorm", "initial": false, "bestiary": 19, "availabilityType": "normal", "availabilityLabel": "B#019"}, {"name": "Don", "ability": "Tackle", "initial": false, "bestiary": 70, "availabilityType": "normal", "availabilityLabel": "B#070"}, {"name": "Murussu", "ability": "Stop", "initial": false, "bestiary": 117, "availabilityType": "normal", "availabilityLabel": "B#117"}, {"name": "Wartpuck", "ability": "Rasp", "initial": false, "bestiary": 201, "availabilityType": "normal", "availabilityLabel": "B#201"}, {"name": "Gorgimera", "ability": "Avalanche", "initial": false, "bestiary": 153, "availabilityType": "normal", "availabilityLabel": "B#153"}, {"name": "Behemoth King", "ability": "Firaga", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss — World of Ruin"}, {"name": "Vector Lythos", "ability": "White Wind", "initial": false, "bestiary": 245, "availabilityType": "normal", "availabilityLabel": "B#245"}, {"name": "Wyvern", "ability": "Cyclonic", "initial": false, "bestiary": 71, "availabilityType": "normal", "availabilityLabel": "B#071"}, {"name": "Zombie Dragon", "ability": "Doom", "initial": false, "bestiary": 89, "availabilityType": "normal", "availabilityLabel": "B#089"}, {"name": "Dragon", "ability": "Revenge Blast", "initial": false, "bestiary": 109, "availabilityType": "normal", "availabilityLabel": "B#109"}, {"name": "Primeval Dragon", "ability": "Firaga", "initial": false, "bestiary": 246, "availabilityType": "normal", "availabilityLabel": "B#246"}, {"name": "Weredragon", "ability": "Death", "initial": false, "bestiary": 208, "availabilityType": "normal", "availabilityLabel": "B#208"}, {"name": "Cirpius", "ability": "Hastega", "initial": false, "bestiary": 20, "availabilityType": "normal", "availabilityLabel": "B#020"}, {"name": "Sprinter", "ability": "Aero", "initial": false, "bestiary": 178, "availabilityType": "normal", "availabilityLabel": "B#178"}, {"name": "Lenergia", "ability": "Shamshir", "initial": false, "bestiary": 83, "availabilityType": "normal", "availabilityLabel": "B#083"}, {"name": "Marchosias", "ability": "Aero", "initial": false, "bestiary": 140, "availabilityType": "normal", "availabilityLabel": "B#140"}, {"name": "Gloomwind", "ability": "Net", "initial": false, "bestiary": 197, "availabilityType": "normal", "availabilityLabel": "B#197"}, {"name": "Dropper", "ability": "Confuse", "initial": false, "bestiary": 136, "availabilityType": "normal", "availabilityLabel": "B#136"}, {"name": "Rock Wasp", "ability": "Sleepsting", "initial": false, "bestiary": 60, "availabilityType": "normal", "availabilityLabel": "B#060"}, {"name": "Grasswyrm", "ability": "Berserk", "initial": false, "bestiary": 72, "availabilityType": "normal", "availabilityLabel": "B#072"}, {"name": "Luridan", "ability": "Rock Slide", "initial": false, "bestiary": 150, "availabilityType": "normal", "availabilityLabel": "B#150"}, {"name": "Twinscythe", "ability": "Metal Cutter", "initial": false, "bestiary": 154, "availabilityType": "normal", "availabilityLabel": "B#154"}, {"name": "Paraladia", "ability": "Poison Touch", "initial": false, "bestiary": 61, "availabilityType": "normal", "availabilityLabel": "B#061"}, {"name": "Exoray", "ability": "Venomist", "initial": false, "bestiary": 146, "availabilityType": "normal", "availabilityLabel": "B#146"}, {"name": "Crusher", "ability": "Lifeshaver", "initial": false, "bestiary": 160, "availabilityType": "normal", "availabilityLabel": "B#160"}, {"name": "Ouroboros", "ability": "Quake", "initial": false, "bestiary": 163, "availabilityType": "normal", "availabilityLabel": "B#163"}, {"name": "Acrophies", "ability": "Numbclaw", "initial": false, "bestiary": 28, "availabilityType": "normal", "availabilityLabel": "B#028"}, {"name": "Schmidt", "ability": "Mega Berserk", "initial": false, "bestiary": 209, "availabilityType": "normal", "availabilityLabel": "B#209"}, {"name": "Devourer", "ability": "Shell Slam", "initial": false, "bestiary": 95, "availabilityType": "normal", "availabilityLabel": "B#095"}, {"name": "Cancer", "ability": "Esuna", "initial": false, "bestiary": 131, "availabilityType": "normal", "availabilityLabel": "B#131"}, {"name": "Gigantoad", "ability": "Sticky Goo", "initial": false, "bestiary": 118, "availabilityType": "normal", "availabilityLabel": "B#118"}, {"name": "Basilisk", "ability": "Break", "initial": false, "bestiary": 179, "availabilityType": "normal", "availabilityLabel": "B#179"}, {"name": "Medusa Chicken", "ability": "Break", "initial": false, "bestiary": 234, "availabilityType": "normal", "availabilityLabel": "B#234"}, {"name": "Landworm", "ability": "Magnitude 8", "initial": false, "bestiary": 247, "availabilityType": "normal", "availabilityLabel": "B#247"}, {"name": "Test Rider", "ability": "Flash Rain", "initial": false, "bestiary": 182, "availabilityType": "normal", "availabilityLabel": "B#182"}, {"name": "Pluto Armor", "ability": "Magitek Laser", "initial": false, "bestiary": 210, "availabilityType": "normal", "availabilityLabel": "B#210"}, {"name": "Onion Dasher", "ability": "Traveler", "initial": false, "bestiary": 190, "availabilityType": "normal", "availabilityLabel": "B#190"}, {"name": "Heavy Armor", "ability": "Magitek Laser", "initial": false, "bestiary": 24, "availabilityType": "normal", "availabilityLabel": "B#024"}, {"name": "Chaser", "ability": "Plasma", "initial": false, "bestiary": 86, "availabilityType": "normal", "availabilityLabel": "B#086"}, {"name": "Gamma", "ability": "Dischord", "initial": false, "bestiary": 248, "availabilityType": "normal", "availabilityLabel": "B#248"}, {"name": "Poplium", "ability": "Cling", "initial": false, "bestiary": 41, "availabilityType": "normal", "availabilityLabel": "B#041"}, {"name": "Intangir", "ability": "Transfusion", "initial": false, "bestiary": 97, "availabilityType": "normal", "availabilityLabel": "B#097"}, {"name": "Misfit", "ability": "Lifeshaver", "initial": false, "bestiary": 107, "availabilityType": "normal", "availabilityLabel": "B#107"}, {"name": "Creature", "ability": "Lifeshaver", "initial": false, "bestiary": 235, "availabilityType": "normal", "availabilityLabel": "B#235"}, {"name": "Enuo", "ability": "Tsunami", "initial": false, "bestiary": 220, "availabilityType": "normal", "availabilityLabel": "B#220"}, {"name": "Deepeye", "ability": "Dread Gaze", "initial": false, "bestiary": 141, "availabilityType": "normal", "availabilityLabel": "B#141"}, {"name": "Unseelie", "ability": "Shell", "initial": false, "bestiary": 15, "availabilityType": "normal", "availabilityLabel": "B#015"}, {"name": "Neck Hunter", "ability": "Imp", "initial": false, "bestiary": 137, "availabilityType": "normal", "availabilityLabel": "B#137"}, {"name": "Grenade", "ability": "Blaze", "initial": false, "bestiary": 73, "availabilityType": "normal", "availabilityLabel": "B#073"}, {"name": "Alluring Rider", "ability": "Doom", "initial": false, "bestiary": 211, "availabilityType": "normal", "availabilityLabel": "B#211"}, {"name": "Pandora", "ability": "Revenge Blast", "initial": false, "bestiary": 212, "availabilityType": "normal", "availabilityLabel": "B#212"}, {"name": "Blade Dancer", "ability": "Osmose", "initial": false, "bestiary": 161, "availabilityType": "normal", "availabilityLabel": "B#161"}, {"name": "Gigantos", "ability": "Magnitude 8", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss #293"}, {"name": "Magna Roader [Red]", "ability": "Silence", "initial": false, "bestiary": 85, "availabilityType": "normal", "availabilityLabel": "B#085"}, {"name": "Lycaon", "ability": "Blaster", "initial": false, "bestiary": 180, "availabilityType": "normal", "availabilityLabel": "B#180"}, {"name": "Parasite", "ability": "Gigavolt", "initial": false, "bestiary": 213, "availabilityType": "normal", "availabilityLabel": "B#213"}, {"name": "Land Ray", "ability": "Mighty Guard", "initial": false, "bestiary": 119, "availabilityType": "normal", "availabilityLabel": "B#119"}, {"name": "Antares", "ability": "Magnitude 8", "initial": false, "bestiary": 90, "availabilityType": "normal", "availabilityLabel": "B#090"}, {"name": "Anemone", "ability": "Gigavolt", "initial": false, "bestiary": 191, "availabilityType": "normal", "availabilityLabel": "B#191"}, {"name": "Moonform", "ability": "Flash Rain", "initial": false, "bestiary": 236, "availabilityType": "normal", "availabilityLabel": "B#236"}, {"name": "Specter", "ability": "Fire", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Unnumbered · Narshe"}, {"name": "Great Malboro", "ability": "Bio", "initial": false, "bestiary": 249, "availabilityType": "normal", "availabilityLabel": "B#249"}, {"name": "Bonnacon", "ability": "Sticky Goo", "initial": false, "bestiary": 99, "availabilityType": "normal", "availabilityLabel": "B#099"}, {"name": "Oceanus", "ability": "Magnitude 8", "initial": false, "bestiary": 132, "availabilityType": "normal", "availabilityLabel": "B#132"}, {"name": "Living Dead", "ability": "Osmose", "initial": false, "bestiary": 46, "availabilityType": "normal", "availabilityLabel": "B#046"}, {"name": "Face", "ability": "1000 Needles", "initial": false, "bestiary": 164, "availabilityType": "normal", "availabilityLabel": "B#164"}, {"name": "Outsider", "ability": "Holy", "initial": false, "bestiary": 250, "availabilityType": "normal", "availabilityLabel": "B#250"}, {"name": "Coco", "ability": "Overture", "initial": false, "bestiary": 214, "availabilityType": "normal", "availabilityLabel": "B#214"}, {"name": "Zeveak", "ability": "Flash Rain", "initial": false, "bestiary": 165, "availabilityType": "normal", "availabilityLabel": "B#165"}, {"name": "Nightwalker", "ability": "Drain", "initial": false, "bestiary": 124, "availabilityType": "normal", "availabilityLabel": "B#124"}, {"name": "Demon Knight", "ability": "Shockwave", "initial": false, "bestiary": 251, "availabilityType": "normal", "availabilityLabel": "B#251"}, {"name": "Imperial Elite", "ability": "Protect", "initial": false, "bestiary": 92, "availabilityType": "normal", "availabilityLabel": "B#092"}, {"name": "Desert Hare", "ability": "Cura", "initial": false, "bestiary": 133, "availabilityType": "normal", "availabilityLabel": "B#133"}, {"name": "Wizard", "ability": "Gravity", "initial": false, "bestiary": 183, "availabilityType": "normal", "availabilityLabel": "B#183"}, {"name": "Devil Fist", "ability": "Will O' the Wisp", "initial": false, "bestiary": 149, "availabilityType": "normal", "availabilityLabel": "B#149"}, {"name": "Illuyankas", "ability": "Gigavolt", "initial": false, "bestiary": 192, "availabilityType": "normal", "availabilityLabel": "B#192"}, {"name": "Sergeant", "ability": "Reflect", "initial": false, "bestiary": 76, "availabilityType": "normal", "availabilityLabel": "B#076"}, {"name": "Aspidochelon", "ability": "Landslide", "initial": false, "bestiary": 237, "availabilityType": "normal", "availabilityLabel": "B#237"}, {"name": "Knotty", "ability": "Stone", "initial": false, "bestiary": 193, "availabilityType": "normal", "availabilityLabel": "B#193"}, {"name": "Luna Wolf", "ability": "Face Chomp", "initial": false, "bestiary": 120, "availabilityType": "normal", "availabilityLabel": "B#120"}, {"name": "Belzecue", "ability": "Gravity", "initial": false, "bestiary": 77, "availabilityType": "normal", "availabilityLabel": "B#077"}, {"name": "Caladrius", "ability": "Acid Rain", "initial": false, "bestiary": 162, "availabilityType": "normal", "availabilityLabel": "B#162"}, {"name": "Tzakmaqiel", "ability": "Imp", "initial": false, "bestiary": 194, "availabilityType": "normal", "availabilityLabel": "B#194"}, {"name": "Lukhavi", "ability": "Snowstorm", "initial": false, "bestiary": 184, "availabilityType": "normal", "availabilityLabel": "B#184"}, {"name": "Eukaryote", "ability": "Fira", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Unnumbered · Narshe"}, {"name": "Land Grillon", "ability": "Wing Snap", "initial": false, "bestiary": 100, "availabilityType": "normal", "availabilityLabel": "B#100"}, {"name": "Goetia", "ability": "Libra", "initial": false, "bestiary": 67, "availabilityType": "normal", "availabilityLabel": "B#067"}, {"name": "Greater Mantis", "ability": "Wind Slash", "initial": false, "bestiary": 181, "availabilityType": "normal", "availabilityLabel": "B#181"}, {"name": "Bogy", "ability": "Growl", "initial": false, "bestiary": 139, "availabilityType": "normal", "availabilityLabel": "B#139"}, {"name": "Purusa", "ability": "Rock Slide", "initial": false, "bestiary": 198, "availabilityType": "normal", "availabilityLabel": "B#198"}, {"name": "Black Dragon", "ability": "Snowstorm", "initial": false, "bestiary": 121, "availabilityType": "normal", "availabilityLabel": "B#121"}, {"name": "Adamankary", "ability": "Acid Rain", "initial": false, "bestiary": 101, "availabilityType": "normal", "availabilityLabel": "B#101"}, {"name": "Dante", "ability": "Lv. 3 Confuse", "initial": false, "bestiary": 138, "availabilityType": "normal", "availabilityLabel": "B#138"}, {"name": "Platinum Dragon", "ability": "Cyclonic", "initial": false, "bestiary": 110, "availabilityType": "normal", "availabilityLabel": "B#110"}, {"name": "Duel Armor", "ability": "Megavolt", "initial": false, "bestiary": 252, "availabilityType": "normal", "availabilityLabel": "B#252"}, {"name": "Psychos", "ability": "Lifeshaver", "initial": false, "bestiary": 187, "availabilityType": "normal", "availabilityLabel": "B#187"}, {"name": "Mousse", "ability": "Transfusion", "initial": false, "bestiary": 142, "availabilityType": "normal", "availabilityLabel": "B#142"}, {"name": "Shambling Corpse", "ability": "Thundaga", "initial": false, "bestiary": 202, "availabilityType": "normal", "availabilityLabel": "B#202"}, {"name": "Punisher", "ability": "Thundaga", "initial": false, "bestiary": 151, "availabilityType": "normal", "availabilityLabel": "B#151"}, {"name": "Balloon", "ability": "Self-Destruct", "initial": false, "bestiary": 98, "availabilityType": "normal", "availabilityLabel": "B#098"}, {"name": "Gobbledygook", "ability": "Vanish", "initial": false, "bestiary": 64, "availabilityType": "normal", "availabilityLabel": "B#064"}, {"name": "Great Behemoth", "ability": "Meteor", "initial": false, "bestiary": 253, "availabilityType": "normal", "availabilityLabel": "B#253"}, {"name": "Scorpion", "ability": "Poison", "initial": false, "bestiary": 125, "availabilityType": "normal", "availabilityLabel": "B#125"}, {"name": "Chaos Dragon", "ability": "Disaster", "initial": false, "bestiary": 170, "availabilityType": "normal", "availabilityLabel": "B#170"}, {"name": "Spitfire", "ability": "Magitek Laser", "initial": false, "bestiary": 105, "availabilityType": "normal", "availabilityLabel": "B#105"}, {"name": "Vector Chimera", "ability": "Aqua Breath", "initial": false, "bestiary": 254, "availabilityType": "normal", "availabilityLabel": "B#254"}, {"name": "Lich", "ability": "Fira", "initial": false, "bestiary": 91, "availabilityType": "normal", "availabilityLabel": "B#091"}, {"name": "Rukh", "ability": "Shamshir", "initial": false, "bestiary": 122, "availabilityType": "normal", "availabilityLabel": "B#122"}, {"name": "Magna Roader [Yellow]", "ability": "Haste", "initial": false, "bestiary": 185, "availabilityType": "normal", "availabilityLabel": "B#185"}, {"name": "Bug", "ability": "Stop", "initial": false, "bestiary": 74, "availabilityType": "normal", "availabilityLabel": "B#074"}, {"name": "Seaflower", "ability": "Sleep", "initial": false, "bestiary": 166, "availabilityType": "normal", "availabilityLabel": "B#166"}, {"name": "Fortis", "ability": "Fireball", "initial": false, "bestiary": 255, "availabilityType": "normal", "availabilityLabel": "B#255"}, {"name": "Venobennu", "ability": "Poison", "initial": false, "bestiary": 103, "availabilityType": "normal", "availabilityLabel": "B#103"}, {"name": "Galypdes", "ability": "Cyclonic", "initial": false, "bestiary": 167, "availabilityType": "normal", "availabilityLabel": "B#167"}, {"name": "Junk", "ability": "Transfusion", "initial": false, "bestiary": 256, "availabilityType": "normal", "availabilityLabel": "B#256"}, {"name": "Mandrake", "ability": "Leech", "initial": false, "bestiary": 102, "availabilityType": "normal", "availabilityLabel": "B#102"}, {"name": "Valeor", "ability": "Stone", "initial": false, "bestiary": 30, "availabilityType": "normal", "availabilityLabel": "B#030"}, {"name": "Amduscias", "ability": "Slowga", "initial": false, "bestiary": 203, "availabilityType": "normal", "availabilityLabel": "B#203"}, {"name": "Necromancer", "ability": "Death", "initial": false, "bestiary": 168, "availabilityType": "normal", "availabilityLabel": "B#168"}, {"name": "Glasya Labolas", "ability": "Revenge Blast", "initial": false, "bestiary": 152, "availabilityType": "normal", "availabilityLabel": "B#152"}, {"name": "Magna Roader [Brown]", "ability": "Lv. 4 Flare", "initial": false, "bestiary": 186, "availabilityType": "normal", "availabilityLabel": "B#186"}, {"name": "Wild Rat", "ability": "Scratch", "initial": false, "bestiary": 31, "availabilityType": "normal", "availabilityLabel": "B#031"}, {"name": "Gold Bear", "ability": "Gouge", "initial": false, "bestiary": 29, "availabilityType": "normal", "availabilityLabel": "B#029"}, {"name": "InnoSent", "ability": "Venomist", "initial": false, "bestiary": 257, "availabilityType": "normal", "availabilityLabel": "B#257"}, {"name": "Clymenus", "ability": "Fira", "initial": false, "bestiary": 169, "availabilityType": "normal", "availabilityLabel": "B#169"}, {"name": "Garm", "ability": "Bodyslam", "initial": false, "bestiary": 188, "availabilityType": "normal", "availabilityLabel": "B#188"}, {"name": "Daedalus", "ability": "Meltdown", "initial": false, "bestiary": 258, "availabilityType": "normal", "availabilityLabel": "B#258"}, {"name": "Baalzephon", "ability": "Blizzaga", "initial": false, "bestiary": 204, "availabilityType": "normal", "availabilityLabel": "B#204"}, {"name": "Ahriman", "ability": "Roulette", "initial": false, "bestiary": 259, "availabilityType": "normal", "availabilityLabel": "B#259"}, {"name": "Death Machine", "ability": "Death", "initial": false, "bestiary": 260, "availabilityType": "normal", "availabilityLabel": "B#260"}, {"name": "Metal Hitman", "ability": "Dischord", "initial": false, "bestiary": 261, "availabilityType": "normal", "availabilityLabel": "B#261"}, {"name": "Io", "ability": "Flare Star", "initial": false, "bestiary": 215, "availabilityType": "normal", "availabilityLabel": "B#215"}]"Clymenus", "ability": "Fira", "initial": false, "bestiary": 169, "availabilityType": "normal", "availabilityLabel": "B#169"}, {"name": "Garm", "ability": "Bodyslam", "initial": false, "bestiary": 188, "availabilityType": "normal", "availabilityLabel": "B#188"}, {"name": "Daedalus", "ability": "Meltdown", "initial": false, "bestiary": 258, "availabilityType": "normal", "availabilityLabel": "B#258"}, {"name": "Baalzephon", "ability": "Blizzaga", "initial": false, "bestiary": 204, "availabilityType": "normal", "availabilityLabel": "B#204"}, {"name": "Ahriman", "ability": "Roulette", "initial": false, "bestiary": 259, "availabilityType": "normal", "availabilityLabel": "B#259"}, {"name": "Death Machine", "ability": "Death", "initial": false, "bestiary": 260, "availabilityType": "normal", "availabilityLabel": "B#260"}, {"name": "Metal Hitman", "ability": "Dischord", "initial": false, "bestiary": 261, "availabilityType": "normal", "availabilityLabel": "B#261"}, {"name": "Io", "ability": "Flare Star", "initial": false, "bestiary": 215, "availabilityType": "normal", "availabilityLabel": "B#215"}];
+        data-search="io flare star b#215"
+        data-name="Io"
+        data-type="normal"
+        data-bestiary="215"
+        data-initial="0"
+      >
+        <input type="checkbox" class="rage-check" data-key="Io">
+        <span class="position">252</span>
+        <span class="rage-info">
+          <strong>Io</strong>
+          <small>Flare Star</small>
+        </span>
+        <span class="badges">
+          
+          <span class="badge normal-badge">B#215</span>
+        </span>
+      </label>
+  </div>
+  <div class="empty hidden" id="empty">
+    No Rages match your current progress and filters.
+  </div>
+</main>
+
+<footer>
+  Your checkmarks and Bestiary limit are saved automatically in this browser.
+  The checklist also imports checkmarks from earlier versions. Subtle dividers mark each 7-row in-game page and hide automatically whenever the list is filtered.
+</footer>
+
+<script>
+const RAGE_STORAGE_KEY = "ff6pr-gau-menu-order-v4";
+const SETTINGS_STORAGE_KEY = "ff6pr-gau-availability-v5";
+const OLD_RAGE_KEYS = [
+  "ff6pr-gau-menu-order-v3",
+  "ff6pr-gau-rages-checklist-v2",
+  "ff6pr-gau-rages-v1"
+];
+
+const data = [{"name": "Guard", "ability": "Critical", "initial": false, "bestiary": 1, "availabilityType": "normal", "availabilityLabel": "B#001"}, {"name": "Imperial Soldier", "ability": "Fire", "initial": false, "bestiary": 37, "availabilityType": "normal", "availabilityLabel": "B#037"}, {"name": "Templar", "ability": "Fira", "initial": false, "bestiary": 38, "availabilityType": "normal", "availabilityLabel": "B#038"}, {"name": "Ninja", "ability": "Water Scroll", "initial": false, "bestiary": 112, "availabilityType": "normal", "availabilityLabel": "B#112"}, {"name": "Samurai", "ability": "Lullaby", "initial": false, "bestiary": 205, "availabilityType": "normal", "availabilityLabel": "B#205"}, {"name": "Borghese", "ability": "Holy", "initial": false, "bestiary": 143, "availabilityType": "normal", "availabilityLabel": "B#143"}, {"name": "Magna Roader [Purple]", "ability": "Bio", "initial": false, "bestiary": 84, "availabilityType": "normal", "availabilityLabel": "B#084"}, {"name": "Yojimbo", "ability": "Shock", "initial": false, "bestiary": 239, "availabilityType": "normal", "availabilityLabel": "B#239"}, {"name": "Cloud", "ability": "Thundara", "initial": false, "bestiary": 42, "availabilityType": "normal", "availabilityLabel": "B#042"}, {"name": "Misty", "ability": "Cura", "initial": false, "bestiary": 156, "availabilityType": "normal", "availabilityLabel": "B#156"}, {"name": "Al Jabr", "ability": "Thundaga", "initial": false, "bestiary": 206, "availabilityType": "normal", "availabilityLabel": "B#206"}, {"name": "Zaghrem", "ability": "Stone", "initial": true, "bestiary": 17, "availabilityType": "normal", "availabilityLabel": "B#017"}, {"name": "Apocrypha", "ability": "Lv. 3 Confuse", "initial": false, "bestiary": 108, "availabilityType": "normal", "availabilityLabel": "B#108"}, {"name": "Dark Force", "ability": "Tsunami", "initial": false, "bestiary": 240, "availabilityType": "normal", "availabilityLabel": "B#240"}, {"name": "Angel Whisper", "ability": "Gravity", "initial": true, "bestiary": 43, "availabilityType": "normal", "availabilityLabel": "B#043"}, {"name": "Oversoul", "ability": "Will o' the Wisp", "initial": false, "bestiary": 44, "availabilityType": "normal", "availabilityLabel": "B#044"}, {"name": "Skeletal Horror", "ability": "Banish", "initial": false, "bestiary": 147, "availabilityType": "normal", "availabilityLabel": "B#147"}, {"name": "Commander", "ability": "Break", "initial": false, "bestiary": 25, "availabilityType": "normal", "availabilityLabel": "B#025"}, {"name": "Mu", "ability": "Snare", "initial": false, "bestiary": 16, "availabilityType": "normal", "availabilityLabel": "B#016"}, {"name": "Wererat", "ability": "Poison", "initial": true, "bestiary": 4, "availabilityType": "normal", "availabilityLabel": "B#004"}, {"name": "Mugbear", "ability": "Net", "initial": false, "bestiary": 148, "availabilityType": "normal", "availabilityLabel": "B#148"}, {"name": "Belmodar", "ability": "Megavolt", "initial": true, "bestiary": 14, "availabilityType": "normal", "availabilityLabel": "B#014"}, {"name": "Muud Suud", "ability": "Snowstorm", "initial": false, "bestiary": 241, "availabilityType": "normal", "availabilityLabel": "B#241"}, {"name": "Leaf Bunny", "ability": "Incisor", "initial": false, "bestiary": 7, "availabilityType": "normal", "availabilityLabel": "B#007"}, {"name": "Stray Cat", "ability": "Cat Scratch", "initial": false, "bestiary": 32, "availabilityType": "normal", "availabilityLabel": "B#032"}, {"name": "Silver Lobo", "ability": "Chomp", "initial": true, "bestiary": 2, "availabilityType": "normal", "availabilityLabel": "B#002"}, {"name": "Doberman", "ability": "Bite", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Unnumbered · Imperial Camp"}, {"name": "Megalodoth", "ability": "Snowstorm", "initial": false, "bestiary": 3, "availabilityType": "normal", "availabilityLabel": "B#003"}, {"name": "Fidor", "ability": "Pounce", "initial": false, "bestiary": 53, "availabilityType": "normal", "availabilityLabel": "B#053"}, {"name": "Briareus", "ability": "Cyclonic", "initial": false, "bestiary": 94, "availabilityType": "normal", "availabilityLabel": "B#094"}, {"name": "Suriander", "ability": "Aqua Breath", "initial": false, "bestiary": 207, "availabilityType": "normal", "availabilityLabel": "B#207"}, {"name": "Chimera", "ability": "Aqua Breath", "initial": false, "bestiary": 96, "availabilityType": "normal", "availabilityLabel": "B#096"}, {"name": "Behemoth", "ability": "Meteor", "initial": false, "bestiary": 111, "availabilityType": "normal", "availabilityLabel": "B#111"}, {"name": "Fafnir", "ability": "Traveler", "initial": false, "bestiary": 114, "availabilityType": "normal", "availabilityLabel": "B#114"}, {"name": "Lesser Lopros", "ability": "Fireball", "initial": false, "bestiary": 21, "availabilityType": "normal", "availabilityLabel": "B#021"}, {"name": "Fossil Dragon", "ability": "Sandstorm", "initial": false, "bestiary": 56, "availabilityType": "normal", "availabilityLabel": "B#056"}, {"name": "Holy Dragon", "ability": "Holy", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss — World of Ruin"}, {"name": "Fiend Dragon", "ability": "Northern Cross", "initial": false, "bestiary": 242, "availabilityType": "normal", "availabilityLabel": "B#242"}, {"name": "Brachiosaur", "ability": "Disaster", "initial": false, "bestiary": 171, "availabilityType": "normal", "availabilityLabel": "B#171"}, {"name": "Tyrannosaur", "ability": "Meteor", "initial": false, "bestiary": 172, "availabilityType": "normal", "availabilityLabel": "B#172"}, {"name": "Darkwind", "ability": "Break", "initial": false, "bestiary": 8, "availabilityType": "normal", "availabilityLabel": "B#008"}, {"name": "Aepyornis", "ability": "Featherdust", "initial": false, "bestiary": 33, "availabilityType": "normal", "availabilityLabel": "B#033"}, {"name": "Vulture", "ability": "Shamshir", "initial": false, "bestiary": 57, "availabilityType": "normal", "availabilityLabel": "B#057"}, {"name": "Vasegiatta", "ability": "Cyclonic", "initial": false, "bestiary": 196, "availabilityType": "normal", "availabilityLabel": "B#196"}, {"name": "Zokka", "ability": "Net", "initial": false, "bestiary": 123, "availabilityType": "normal", "availabilityLabel": "B#123"}, {"name": "Trapper", "ability": "Lv. 3 Confuse", "initial": false, "bestiary": 79, "availabilityType": "normal", "availabilityLabel": "B#079"}, {"name": "Hornet", "ability": "Iron Stinger", "initial": true, "bestiary": 12, "availabilityType": "normal", "availabilityLabel": "B#012"}, {"name": "Nettlehopper", "ability": "Berserk", "initial": false, "bestiary": 34, "availabilityType": "normal", "availabilityLabel": "B#034"}, {"name": "Delta Beetle", "ability": "Megavolt", "initial": false, "bestiary": 126, "availabilityType": "normal", "availabilityLabel": "B#126"}, {"name": "Killer Mantis", "ability": "Metal Cutter", "initial": false, "bestiary": 115, "availabilityType": "normal", "availabilityLabel": "B#115"}, {"name": "Trillium", "ability": "Bio", "initial": false, "bestiary": 18, "availabilityType": "normal", "availabilityLabel": "B#018"}, {"name": "Rafflesia", "ability": "Entice", "initial": false, "bestiary": 157, "availabilityType": "normal", "availabilityLabel": "B#157"}, {"name": "Tumbleweed", "ability": "Lifeshaver", "initial": false, "bestiary": 173, "availabilityType": "normal", "availabilityLabel": "B#173"}, {"name": "Vampire Thorn", "ability": "Bio", "initial": false, "bestiary": 127, "availabilityType": "normal", "availabilityLabel": "B#127"}, {"name": "Cartagra", "ability": "Poison Barb", "initial": true, "bestiary": 27, "availabilityType": "normal", "availabilityLabel": "B#027"}, {"name": "Nautiloid", "ability": "Ink", "initial": false, "bestiary": 22, "availabilityType": "normal", "availabilityLabel": "B#022"}, {"name": "Exocite", "ability": "Pincer", "initial": true, "bestiary": 23, "availabilityType": "normal", "availabilityLabel": "B#023"}, {"name": "Anguiform", "ability": "Aqua Breath", "initial": false, "bestiary": 50, "availabilityType": "normal", "availabilityLabel": "B#050"}, {"name": "Leap Frog", "ability": "Sticky Goo", "initial": false, "bestiary": 174, "availabilityType": "normal", "availabilityLabel": "B#174"}, {"name": "Lizard", "ability": "Break", "initial": false, "bestiary": 128, "availabilityType": "normal", "availabilityLabel": "B#128"}, {"name": "Litwor Chicken", "ability": "Quake", "initial": false, "bestiary": 68, "availabilityType": "normal", "availabilityLabel": "B#068"}, {"name": "Slagworm", "ability": "Sandstorm", "initial": false, "bestiary": 175, "availabilityType": "normal", "availabilityLabel": "B#175"}, {"name": "Hell's Rider", "ability": "Venomist", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss #273"}, {"name": "Onion Knight", "ability": "Imp", "initial": false, "bestiary": 75, "availabilityType": "normal", "availabilityLabel": "B#075"}, {"name": "Magitek Armor", "ability": "Magitek Laser", "initial": true, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss #266"}, {"name": "Sky Armor", "ability": "Magitek Laser", "initial": false, "bestiary": 104, "availabilityType": "normal", "availabilityLabel": "B#104"}, {"name": "Satellite", "ability": "Sonic Boom", "initial": false, "bestiary": 39, "availabilityType": "normal", "availabilityLabel": "B#039"}, {"name": "Armored Weapon", "ability": "Gravity Bomb", "initial": false, "bestiary": 216, "availabilityType": "normal", "availabilityLabel": "B#216"}, {"name": "Spritzer", "ability": "Blaze", "initial": false, "bestiary": 5, "availabilityType": "normal", "availabilityLabel": "B#005"}, {"name": "Flan", "ability": "Sticky Goo", "initial": false, "bestiary": 80, "availabilityType": "normal", "availabilityLabel": "B#080"}, {"name": "Outcast", "ability": "Lifeshaver", "initial": false, "bestiary": 87, "availabilityType": "normal", "availabilityLabel": "B#087"}, {"name": "Humpty", "ability": "Poison", "initial": false, "bestiary": 134, "availabilityType": "normal", "availabilityLabel": "B#134"}, {"name": "Brainpan", "ability": "1000 Needles", "initial": false, "bestiary": 106, "availabilityType": "normal", "availabilityLabel": "B#106"}, {"name": "Cruller", "ability": "Sticky Goo", "initial": false, "bestiary": 135, "availabilityType": "normal", "availabilityLabel": "B#135"}, {"name": "Cactuar", "ability": "1000 Needles", "initial": false, "bestiary": 176, "availabilityType": "normal", "availabilityLabel": "B#176"}, {"name": "Bandit", "ability": "Self-Destruct", "initial": false, "bestiary": 6, "availabilityType": "normal", "availabilityLabel": "B#006"}, {"name": "Harvester", "ability": "Haste", "initial": false, "bestiary": 62, "availabilityType": "normal", "availabilityLabel": "B#062"}, {"name": "Bomb", "ability": "Blaze", "initial": false, "bestiary": 45, "availabilityType": "normal", "availabilityLabel": "B#045"}, {"name": "Still Life", "ability": "Lullaby", "initial": false, "bestiary": 158, "availabilityType": "normal", "availabilityLabel": "B#158"}, {"name": "Lunatys", "ability": "Meteor", "initial": false, "bestiary": 217, "availabilityType": "normal", "availabilityLabel": "B#217"}, {"name": "Veil Dancer", "ability": "Blizzara", "initial": false, "bestiary": 65, "availabilityType": "normal", "availabilityLabel": "B#065"}, {"name": "Hill Gigas", "ability": "Magnitude 8", "initial": false, "bestiary": 63, "availabilityType": "normal", "availabilityLabel": "B#063"}, {"name": "Tonberry", "ability": "Break", "initial": false, "bestiary": 189, "availabilityType": "normal", "availabilityLabel": "B#189"}, {"name": "Magic Urn", "ability": "Curaga", "initial": false, "bestiary": 221, "availabilityType": "normal", "availabilityLabel": "B#221"}, {"name": "Mover", "ability": "Meltdown", "initial": false, "bestiary": 243, "availabilityType": "normal", "availabilityLabel": "B#243"}, {"name": "Figaro Lizard", "ability": "Dischord", "initial": false, "bestiary": 218, "availabilityType": "normal", "availabilityLabel": "B#218"}, {"name": "Devoahan", "ability": "Slowga", "initial": false, "bestiary": 129, "availabilityType": "normal", "availabilityLabel": "B#129"}, {"name": "Aspiran", "ability": "Gigavolt", "initial": false, "bestiary": 51, "availabilityType": "normal", "availabilityLabel": "B#051"}, {"name": "Ghost", "ability": "Thundara", "initial": false, "bestiary": 40, "availabilityType": "normal", "availabilityLabel": "B#040"}, {"name": "Crawler", "ability": "Traveler", "initial": false, "bestiary": 177, "availabilityType": "normal", "availabilityLabel": "B#177"}, {"name": "Sand Ray", "ability": "Tail", "initial": false, "bestiary": 9, "availabilityType": "normal", "availabilityLabel": "B#009"}, {"name": "Alacran", "ability": "Numb", "initial": false, "bestiary": 10, "availabilityType": "normal", "availabilityLabel": "B#010"}, {"name": "Actinian", "ability": "Clamp", "initial": false, "bestiary": 52, "availabilityType": "normal", "availabilityLabel": "B#052"}, {"name": "Sandhorse", "ability": "Sandstorm", "initial": false, "bestiary": 130, "availabilityType": "normal", "availabilityLabel": "B#130"}, {"name": "Darkside", "ability": "Blizzara", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Unnumbered · Narshe"}, {"name": "Malboro", "ability": "Bad Breath", "initial": false, "bestiary": 144, "availabilityType": "normal", "availabilityLabel": "B#144"}, {"name": "Urok", "ability": "Digestive Fluid", "initial": false, "bestiary": 13, "availabilityType": "normal", "availabilityLabel": "B#013"}, {"name": "Foper", "ability": "Death", "initial": false, "bestiary": 11, "availabilityType": "normal", "availabilityLabel": "B#011"}, {"name": "Guard Leader", "ability": "Wind Slash", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss #265"}, {"name": "Corporal", "ability": "Swing", "initial": false, "bestiary": 54, "availabilityType": "normal", "availabilityLabel": "B#054"}, {"name": "General", "ability": "Cura", "initial": false, "bestiary": 81, "availabilityType": "normal", "availabilityLabel": "B#081"}, {"name": "Covert", "ability": "Wind Slash", "initial": false, "bestiary": 199, "availabilityType": "normal", "availabilityLabel": "B#199"}, {"name": "Kamui", "ability": "Snowstorm", "initial": false, "bestiary": 200, "availabilityType": "normal", "availabilityLabel": "B#200"}, {"name": "Warlock", "ability": "Holy", "initial": false, "bestiary": 231, "availabilityType": "normal", "availabilityLabel": "B#231"}, {"name": "Cherry", "ability": "Holy", "initial": false, "bestiary": 244, "availabilityType": "normal", "availabilityLabel": "B#244"}, {"name": "Joker", "ability": "Thundara", "initial": false, "bestiary": 69, "availabilityType": "normal", "availabilityLabel": "B#069"}, {"name": "Iron Fist", "ability": "Stone", "initial": false, "bestiary": 58, "availabilityType": "normal", "availabilityLabel": "B#058"}, {"name": "Devil", "ability": "Thundaga", "initial": false, "bestiary": 219, "availabilityType": "normal", "availabilityLabel": "B#219"}, {"name": "Provoker", "ability": "Imp", "initial": false, "bestiary": 88, "availabilityType": "normal", "availabilityLabel": "B#088"}, {"name": "Cloudwraith", "ability": "Flare", "initial": false, "bestiary": 145, "availabilityType": "normal", "availabilityLabel": "B#145"}, {"name": "Mahadeva", "ability": "Death", "initial": false, "bestiary": 232, "availabilityType": "normal", "availabilityLabel": "B#232"}, {"name": "Vector Hound", "ability": "Bite", "initial": false, "bestiary": 26, "availabilityType": "normal", "availabilityLabel": "B#026"}, {"name": "Peeper", "ability": "White Wind", "initial": false, "bestiary": 116, "availabilityType": "normal", "availabilityLabel": "B#116"}, {"name": "Stunner", "ability": "Incisors", "initial": false, "bestiary": 66, "availabilityType": "normal", "availabilityLabel": "B#066"}, {"name": "Sorath", "ability": "Cave In", "initial": false, "bestiary": 233, "availabilityType": "normal", "availabilityLabel": "B#233"}, {"name": "Destroyer", "ability": "Reraise", "initial": false, "bestiary": 82, "availabilityType": "normal", "availabilityLabel": "B#082"}, {"name": "Chippirabbit", "ability": "Raise", "initial": false, "bestiary": 35, "availabilityType": "normal", "availabilityLabel": "B#035"}, {"name": "Coeurl Cat", "ability": "Blaster", "initial": false, "bestiary": 159, "availabilityType": "normal", "availabilityLabel": "B#159"}, {"name": "Bloodfang", "ability": "Drain", "initial": false, "bestiary": 59, "availabilityType": "normal", "availabilityLabel": "B#059"}, {"name": "Hunting Hound", "ability": "Bite", "initial": false, "bestiary": 55, "availabilityType": "normal", "availabilityLabel": "B#055"}, {"name": "Gorgias", "ability": "Snowstorm", "initial": false, "bestiary": 19, "availabilityType": "normal", "availabilityLabel": "B#019"}, {"name": "Don", "ability": "Tackle", "initial": false, "bestiary": 70, "availabilityType": "normal", "availabilityLabel": "B#070"}, {"name": "Murussu", "ability": "Stop", "initial": false, "bestiary": 117, "availabilityType": "normal", "availabilityLabel": "B#117"}, {"name": "Wartpuck", "ability": "Rasp", "initial": false, "bestiary": 201, "availabilityType": "normal", "availabilityLabel": "B#201"}, {"name": "Gorgimera", "ability": "Avalanche", "initial": false, "bestiary": 153, "availabilityType": "normal", "availabilityLabel": "B#153"}, {"name": "Behemoth King", "ability": "Firaga", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss — World of Ruin"}, {"name": "Vector Lythos", "ability": "White Wind", "initial": false, "bestiary": 245, "availabilityType": "normal", "availabilityLabel": "B#245"}, {"name": "Wyvern", "ability": "Cyclonic", "initial": false, "bestiary": 71, "availabilityType": "normal", "availabilityLabel": "B#071"}, {"name": "Zombie Dragon", "ability": "Doom", "initial": false, "bestiary": 89, "availabilityType": "normal", "availabilityLabel": "B#089"}, {"name": "Dragon", "ability": "Revenge Blast", "initial": false, "bestiary": 109, "availabilityType": "normal", "availabilityLabel": "B#109"}, {"name": "Primeval Dragon", "ability": "Firaga", "initial": false, "bestiary": 246, "availabilityType": "normal", "availabilityLabel": "B#246"}, {"name": "Weredragon", "ability": "Death", "initial": false, "bestiary": 208, "availabilityType": "normal", "availabilityLabel": "B#208"}, {"name": "Cirpius", "ability": "Hastega", "initial": false, "bestiary": 20, "availabilityType": "normal", "availabilityLabel": "B#020"}, {"name": "Sprinter", "ability": "Aero", "initial": false, "bestiary": 178, "availabilityType": "normal", "availabilityLabel": "B#178"}, {"name": "Lenergia", "ability": "Shamshir", "initial": false, "bestiary": 83, "availabilityType": "normal", "availabilityLabel": "B#083"}, {"name": "Marchosias", "ability": "Aero", "initial": false, "bestiary": 140, "availabilityType": "normal", "availabilityLabel": "B#140"}, {"name": "Gloomwind", "ability": "Net", "initial": false, "bestiary": 197, "availabilityType": "normal", "availabilityLabel": "B#197"}, {"name": "Dropper", "ability": "Confuse", "initial": false, "bestiary": 136, "availabilityType": "normal", "availabilityLabel": "B#136"}, {"name": "Rock Wasp", "ability": "Sleepsting", "initial": false, "bestiary": 60, "availabilityType": "normal", "availabilityLabel": "B#060"}, {"name": "Grasswyrm", "ability": "Berserk", "initial": false, "bestiary": 72, "availabilityType": "normal", "availabilityLabel": "B#072"}, {"name": "Luridan", "ability": "Rock Slide", "initial": false, "bestiary": 150, "availabilityType": "normal", "availabilityLabel": "B#150"}, {"name": "Twinscythe", "ability": "Metal Cutter", "initial": false, "bestiary": 154, "availabilityType": "normal", "availabilityLabel": "B#154"}, {"name": "Paraladia", "ability": "Poison Touch", "initial": false, "bestiary": 61, "availabilityType": "normal", "availabilityLabel": "B#061"}, {"name": "Exoray", "ability": "Venomist", "initial": false, "bestiary": 146, "availabilityType": "normal", "availabilityLabel": "B#146"}, {"name": "Crusher", "ability": "Lifeshaver", "initial": false, "bestiary": 160, "availabilityType": "normal", "availabilityLabel": "B#160"}, {"name": "Ouroboros", "ability": "Quake", "initial": false, "bestiary": 163, "availabilityType": "normal", "availabilityLabel": "B#163"}, {"name": "Acrophies", "ability": "Numbclaw", "initial": false, "bestiary": 28, "availabilityType": "normal", "availabilityLabel": "B#028"}, {"name": "Schmidt", "ability": "Mega Berserk", "initial": false, "bestiary": 209, "availabilityType": "normal", "availabilityLabel": "B#209"}, {"name": "Devourer", "ability": "Shell Slam", "initial": false, "bestiary": 95, "availabilityType": "normal", "availabilityLabel": "B#095"}, {"name": "Cancer", "ability": "Esuna", "initial": false, "bestiary": 131, "availabilityType": "normal", "availabilityLabel": "B#131"}, {"name": "Gigantoad", "ability": "Sticky Goo", "initial": false, "bestiary": 118, "availabilityType": "normal", "availabilityLabel": "B#118"}, {"name": "Basilisk", "ability": "Break", "initial": false, "bestiary": 179, "availabilityType": "normal", "availabilityLabel": "B#179"}, {"name": "Medusa Chicken", "ability": "Break", "initial": false, "bestiary": 234, "availabilityType": "normal", "availabilityLabel": "B#234"}, {"name": "Landworm", "ability": "Magnitude 8", "initial": false, "bestiary": 247, "availabilityType": "normal", "availabilityLabel": "B#247"}, {"name": "Test Rider", "ability": "Flash Rain", "initial": false, "bestiary": 182, "availabilityType": "normal", "availabilityLabel": "B#182"}, {"name": "Pluto Armor", "ability": "Magitek Laser", "initial": false, "bestiary": 210, "availabilityType": "normal", "availabilityLabel": "B#210"}, {"name": "Onion Dasher", "ability": "Traveler", "initial": false, "bestiary": 190, "availabilityType": "normal", "availabilityLabel": "B#190"}, {"name": "Heavy Armor", "ability": "Magitek Laser", "initial": false, "bestiary": 24, "availabilityType": "normal", "availabilityLabel": "B#024"}, {"name": "Chaser", "ability": "Plasma", "initial": false, "bestiary": 86, "availabilityType": "normal", "availabilityLabel": "B#086"}, {"name": "Gamma", "ability": "Dischord", "initial": false, "bestiary": 248, "availabilityType": "normal", "availabilityLabel": "B#248"}, {"name": "Poplium", "ability": "Cling", "initial": false, "bestiary": 41, "availabilityType": "normal", "availabilityLabel": "B#041"}, {"name": "Intangir", "ability": "Transfusion", "initial": false, "bestiary": 97, "availabilityType": "normal", "availabilityLabel": "B#097"}, {"name": "Misfit", "ability": "Lifeshaver", "initial": false, "bestiary": 107, "availabilityType": "normal", "availabilityLabel": "B#107"}, {"name": "Creature", "ability": "Lifeshaver", "initial": false, "bestiary": 235, "availabilityType": "normal", "availabilityLabel": "B#235"}, {"name": "Enuo", "ability": "Tsunami", "initial": false, "bestiary": 220, "availabilityType": "normal", "availabilityLabel": "B#220"}, {"name": "Deepeye", "ability": "Dread Gaze", "initial": false, "bestiary": 141, "availabilityType": "normal", "availabilityLabel": "B#141"}, {"name": "Unseelie", "ability": "Shell", "initial": false, "bestiary": 15, "availabilityType": "normal", "availabilityLabel": "B#015"}, {"name": "Neck Hunter", "ability": "Imp", "initial": false, "bestiary": 137, "availabilityType": "normal", "availabilityLabel": "B#137"}, {"name": "Grenade", "ability": "Blaze", "initial": false, "bestiary": 73, "availabilityType": "normal", "availabilityLabel": "B#073"}, {"name": "Alluring Rider", "ability": "Doom", "initial": false, "bestiary": 211, "availabilityType": "normal", "availabilityLabel": "B#211"}, {"name": "Pandora", "ability": "Revenge Blast", "initial": false, "bestiary": 212, "availabilityType": "normal", "availabilityLabel": "B#212"}, {"name": "Blade Dancer", "ability": "Osmose", "initial": false, "bestiary": 161, "availabilityType": "normal", "availabilityLabel": "B#161"}, {"name": "Gigantos", "ability": "Magnitude 8", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Boss #293"}, {"name": "Magna Roader [Red]", "ability": "Silence", "initial": false, "bestiary": 85, "availabilityType": "normal", "availabilityLabel": "B#085"}, {"name": "Lycaon", "ability": "Blaster", "initial": false, "bestiary": 180, "availabilityType": "normal", "availabilityLabel": "B#180"}, {"name": "Parasite", "ability": "Gigavolt", "initial": false, "bestiary": 213, "availabilityType": "normal", "availabilityLabel": "B#213"}, {"name": "Land Ray", "ability": "Mighty Guard", "initial": false, "bestiary": 119, "availabilityType": "normal", "availabilityLabel": "B#119"}, {"name": "Antares", "ability": "Magnitude 8", "initial": false, "bestiary": 90, "availabilityType": "normal", "availabilityLabel": "B#090"}, {"name": "Anemone", "ability": "Gigavolt", "initial": false, "bestiary": 191, "availabilityType": "normal", "availabilityLabel": "B#191"}, {"name": "Moonform", "ability": "Flash Rain", "initial": false, "bestiary": 236, "availabilityType": "normal", "availabilityLabel": "B#236"}, {"name": "Specter", "ability": "Fire", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Unnumbered · Narshe"}, {"name": "Great Malboro", "ability": "Bio", "initial": false, "bestiary": 249, "availabilityType": "normal", "availabilityLabel": "B#249"}, {"name": "Bonnacon", "ability": "Sticky Goo", "initial": false, "bestiary": 99, "availabilityType": "normal", "availabilityLabel": "B#099"}, {"name": "Oceanus", "ability": "Magnitude 8", "initial": false, "bestiary": 132, "availabilityType": "normal", "availabilityLabel": "B#132"}, {"name": "Living Dead", "ability": "Osmose", "initial": false, "bestiary": 46, "availabilityType": "normal", "availabilityLabel": "B#046"}, {"name": "Face", "ability": "1000 Needles", "initial": false, "bestiary": 164, "availabilityType": "normal", "availabilityLabel": "B#164"}, {"name": "Outsider", "ability": "Holy", "initial": false, "bestiary": 250, "availabilityType": "normal", "availabilityLabel": "B#250"}, {"name": "Coco", "ability": "Overture", "initial": false, "bestiary": 214, "availabilityType": "normal", "availabilityLabel": "B#214"}, {"name": "Zeveak", "ability": "Flash Rain", "initial": false, "bestiary": 165, "availabilityType": "normal", "availabilityLabel": "B#165"}, {"name": "Nightwalker", "ability": "Drain", "initial": false, "bestiary": 124, "availabilityType": "normal", "availabilityLabel": "B#124"}, {"name": "Demon Knight", "ability": "Shockwave", "initial": false, "bestiary": 251, "availabilityType": "normal", "availabilityLabel": "B#251"}, {"name": "Imperial Elite", "ability": "Protect", "initial": false, "bestiary": 92, "availabilityType": "normal", "availabilityLabel": "B#092"}, {"name": "Desert Hare", "ability": "Cura", "initial": false, "bestiary": 133, "availabilityType": "normal", "availabilityLabel": "B#133"}, {"name": "Wizard", "ability": "Gravity", "initial": false, "bestiary": 183, "availabilityType": "normal", "availabilityLabel": "B#183"}, {"name": "Devil Fist", "ability": "Will o' the Wisp", "initial": false, "bestiary": 149, "availabilityType": "normal", "availabilityLabel": "B#149"}, {"name": "Illuyankas", "ability": "Gigavolt", "initial": false, "bestiary": 192, "availabilityType": "normal", "availabilityLabel": "B#192"}, {"name": "Sergeant", "ability": "Reflect", "initial": false, "bestiary": 76, "availabilityType": "normal", "availabilityLabel": "B#076"}, {"name": "Aspidochelon", "ability": "Landslide", "initial": false, "bestiary": 237, "availabilityType": "normal", "availabilityLabel": "B#237"}, {"name": "Knotty", "ability": "Stone", "initial": false, "bestiary": 193, "availabilityType": "normal", "availabilityLabel": "B#193"}, {"name": "Luna Wolf", "ability": "Face Chomp", "initial": false, "bestiary": 120, "availabilityType": "normal", "availabilityLabel": "B#120"}, {"name": "Belzecue", "ability": "Gravity", "initial": false, "bestiary": 77, "availabilityType": "normal", "availabilityLabel": "B#077"}, {"name": "Caladrius", "ability": "Acid Rain", "initial": false, "bestiary": 162, "availabilityType": "normal", "availabilityLabel": "B#162"}, {"name": "Tzakmaqiel", "ability": "Imp", "initial": false, "bestiary": 194, "availabilityType": "normal", "availabilityLabel": "B#194"}, {"name": "Lukhavi", "ability": "Snowstorm", "initial": false, "bestiary": 184, "availabilityType": "normal", "availabilityLabel": "B#184"}, {"name": "Eukaryote", "ability": "Fira", "initial": false, "bestiary": null, "availabilityType": "special", "availabilityLabel": "Unnumbered · Narshe"}, {"name": "Land Grillon", "ability": "Wing Snap", "initial": false, "bestiary": 100, "availabilityType": "normal", "availabilityLabel": "B#100"}, {"name": "Goetia", "ability": "Libra", "initial": false, "bestiary": 67, "availabilityType": "normal", "availabilityLabel": "B#067"}, {"name": "Greater Mantis", "ability": "Wind Slash", "initial": false, "bestiary": 181, "availabilityType": "normal", "availabilityLabel": "B#181"}, {"name": "Bogy", "ability": "Growl", "initial": false, "bestiary": 139, "availabilityType": "normal", "availabilityLabel": "B#139"}, {"name": "Purusa", "ability": "Rock Slide", "initial": false, "bestiary": 198, "availabilityType": "normal", "availabilityLabel": "B#198"}, {"name": "Black Dragon", "ability": "Snowstorm", "initial": false, "bestiary": 121, "availabilityType": "normal", "availabilityLabel": "B#121"}, {"name": "Adamankary", "ability": "Acid Rain", "initial": false, "bestiary": 101, "availabilityType": "normal", "availabilityLabel": "B#101"}, {"name": "Dante", "ability": "Lv. 3 Confuse", "initial": false, "bestiary": 138, "availabilityType": "normal", "availabilityLabel": "B#138"}, {"name": "Platinum Dragon", "ability": "Cyclonic", "initial": false, "bestiary": 110, "availabilityType": "normal", "availabilityLabel": "B#110"}, {"name": "Duel Armor", "ability": "Megavolt", "initial": false, "bestiary": 252, "availabilityType": "normal", "availabilityLabel": "B#252"}, {"name": "Psychos", "ability": "Lifeshaver", "initial": false, "bestiary": 187, "availabilityType": "normal", "availabilityLabel": "B#187"}, {"name": "Mousse", "ability": "Transfusion", "initial": false, "bestiary": 142, "availabilityType": "normal", "availabilityLabel": "B#142"}, {"name": "Shambling Corpse", "ability": "Thundaga", "initial": false, "bestiary": 202, "availabilityType": "normal", "availabilityLabel": "B#202"}, {"name": "Punisher", "ability": "Thundaga", "initial": false, "bestiary": 151, "availabilityType": "normal", "availabilityLabel": "B#151"}, {"name": "Balloon", "ability": "Self-Destruct", "initial": false, "bestiary": 98, "availabilityType": "normal", "availabilityLabel": "B#098"}, {"name": "Gobbledygook", "ability": "Vanish", "initial": false, "bestiary": 64, "availabilityType": "normal", "availabilityLabel": "B#064"}, {"name": "Great Behemoth", "ability": "Meteor", "initial": false, "bestiary": 253, "availabilityType": "normal", "availabilityLabel": "B#253"}, {"name": "Scorpion", "ability": "Poison", "initial": false, "bestiary": 125, "availabilityType": "normal", "availabilityLabel": "B#125"}, {"name": "Chaos Dragon", "ability": "Disaster", "initial": false, "bestiary": 170, "availabilityType": "normal", "availabilityLabel": "B#170"}, {"name": "Spitfire", "ability": "Magitek Laser", "initial": false, "bestiary": 105, "availabilityType": "normal", "availabilityLabel": "B#105"}, {"name": "Vector Chimera", "ability": "Aqua Breath", "initial": false, "bestiary": 254, "availabilityType": "normal", "availabilityLabel": "B#254"}, {"name": "Lich", "ability": "Fira", "initial": false, "bestiary": 91, "availabilityType": "normal", "availabilityLabel": "B#091"}, {"name": "Rukh", "ability": "Shamshir", "initial": false, "bestiary": 122, "availabilityType": "normal", "availabilityLabel": "B#122"}, {"name": "Magna Roader [Yellow]", "ability": "Haste", "initial": false, "bestiary": 185, "availabilityType": "normal", "availabilityLabel": "B#185"}, {"name": "Bug", "ability": "Stop", "initial": false, "bestiary": 74, "availabilityType": "normal", "availabilityLabel": "B#074"}, {"name": "Seaflower", "ability": "Sleep", "initial": false, "bestiary": 166, "availabilityType": "normal", "availabilityLabel": "B#166"}, {"name": "Fortis", "ability": "Fireball", "initial": false, "bestiary": 255, "availabilityType": "normal", "availabilityLabel": "B#255"}, {"name": "Venobennu", "ability": "Poison", "initial": false, "bestiary": 103, "availabilityType": "normal", "availabilityLabel": "B#103"}, {"name": "Galypdes", "ability": "Cyclonic", "initial": false, "bestiary": 167, "availabilityType": "normal", "availabilityLabel": "B#167"}, {"name": "Junk", "ability": "Transfusion", "initial": false, "bestiary": 256, "availabilityType": "normal", "availabilityLabel": "B#256"}, {"name": "Mandrake", "ability": "Leech", "initial": false, "bestiary": 102, "availabilityType": "normal", "availabilityLabel": "B#102"}, {"name": "Valeor", "ability": "Stone", "initial": false, "bestiary": 30, "availabilityType": "normal", "availabilityLabel": "B#030"}, {"name": "Amduscias", "ability": "Slowga", "initial": false, "bestiary": 203, "availabilityType": "normal", "availabilityLabel": "B#203"}, {"name": "Necromancer", "ability": "Death", "initial": false, "bestiary": 168, "availabilityType": "normal", "availabilityLabel": "B#168"}, {"name": "Glasya Labolas", "ability": "Revenge Blast", "initial": false, "bestiary": 152, "availabilityType": "normal", "availabilityLabel": "B#152"}, {"name": "Magna Roader [Brown]", "ability": "Lv. 4 Flare", "initial": false, "bestiary": 186, "availabilityType": "normal", "availabilityLabel": "B#186"}, {"name": "Wild Rat", "ability": "Scratch", "initial": false, "bestiary": 31, "availabilityType": "normal", "availabilityLabel": "B#031"}, {"name": "Gold Bear", "ability": "Gouge", "initial": false, "bestiary": 29, "availabilityType": "normal", "availabilityLabel": "B#029"}, {"name": "InnoSent", "ability": "Venomist", "initial": false, "bestiary": 257, "availabilityType": "normal", "availabilityLabel": "B#257"}, {"name": "Clymenus", "ability": "Fira", "initial": false, "bestiary": 169, "availabilityType": "normal", "availabilityLabel": "B#169"}, {"name": "Garm", "ability": "Bodyslam", "initial": false, "bestiary": 188, "availabilityType": "normal", "availabilityLabel": "B#188"}, {"name": "Daedalus", "ability": "Meltdown", "initial": false, "bestiary": 258, "availabilityType": "normal", "availabilityLabel": "B#258"}, {"name": "Baalzephon", "ability": "Blizzaga", "initial": false, "bestiary": 204, "availabilityType": "normal", "availabilityLabel": "B#204"}, {"name": "Ahriman", "ability": "Roulette", "initial": false, "bestiary": 259, "availabilityType": "normal", "availabilityLabel": "B#259"}, {"name": "Death Machine", "ability": "Death", "initial": false, "bestiary": 260, "availabilityType": "normal", "availabilityLabel": "B#260"}, {"name": "Metal Hitman", "ability": "Dischord", "initial": false, "bestiary": 261, "availabilityType": "normal", "availabilityLabel": "B#261"}, {"name": "Io", "ability": "Flare Star", "initial": false, "bestiary": 215, "availabilityType": "normal", "availabilityLabel": "B#215"}];
 const specialData = {"Guard Leader": {"label": "Guard Leader", "detail": "Boss #265", "group": "boss"}, "Magitek Armor": {"label": "Magitek Armor", "detail": "Boss #266", "group": "boss"}, "Hell's Rider": {"label": "Hell's Rider", "detail": "Boss #273", "group": "boss"}, "Gigantos": {"label": "Gigantos", "detail": "Boss #293", "group": "boss"}, "Behemoth King": {"label": "Behemoth King", "detail": "Boss — World of Ruin", "group": "boss"}, "Holy Dragon": {"label": "Holy Dragon", "detail": "Boss — World of Ruin", "group": "boss"}, "Doberman": {"label": "Doberman", "detail": "Unnumbered · Imperial Camp", "group": "unnumbered"}, "Darkside": {"label": "Darkside", "detail": "Unnumbered · Narshe", "group": "unnumbered"}, "Specter": {"label": "Specter", "detail": "Unnumbered · Narshe", "group": "unnumbered"}, "Eukaryote": {"label": "Eukaryote", "detail": "Unnumbered · Narshe", "group": "unnumbered"}};
 
 const cards = [...document.querySelectorAll(".rage-card")];
